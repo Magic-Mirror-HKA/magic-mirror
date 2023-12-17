@@ -1,0 +1,8 @@
+singleQuote: false
+tabWidth: 2
+trailingComma: all
+endOfLine: auto
+overrides:
+  - files: ['*.tsx', '*.ts', '*.mts', '*.js', '*.mjs', '*.cjs']
+    options:
+      tabWidth: 4

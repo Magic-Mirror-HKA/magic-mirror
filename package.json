@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/styled-components": "^5.1.34",
+    "react-webcam": "^7.2.0",
+    "styled-components": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/react-webcam": "^3.0.0"
+  }
+}

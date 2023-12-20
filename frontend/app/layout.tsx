@@ -5,6 +5,7 @@ import "@fontsource/inter";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import ApplicationContainerComponent from "@/components/ApplicationContainerComponent";
 import ThemeRegistry from "@/app/themeRegistry";
+import { FullScreenContextProvider } from "@/context/FullScreenContext";
 export const metadata: Metadata = {
     title: "Magic Mirror",
     description: "Magic Mirror",
@@ -20,9 +21,11 @@ export default function RootLayout(props: PropsRootLayout) {
             <body>
                 <ThemeRegistry options={{ key: "joy" }}>
                     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-                        <ApplicationContainerComponent>
-                            {children}
-                        </ApplicationContainerComponent>
+                        <FullScreenContextProvider>
+                            <ApplicationContainerComponent>
+                                {children}
+                            </ApplicationContainerComponent>
+                        </FullScreenContextProvider>
                     </AppRouterCacheProvider>
                 </ThemeRegistry>
             </body>

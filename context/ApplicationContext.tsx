@@ -5,3 +5,8 @@ export type SelectablePageItem = {
     icon: any;
     onClick: () => void;
 };
+
+export type ContainerSize = {
+    width: number;
+    height: number;
+};

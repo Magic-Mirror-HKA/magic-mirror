@@ -3,14 +3,17 @@ import React, { PropsWithChildren } from "react";
 import { Box, IconButton, styled, Typography } from "@mui/joy";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import { SxProps } from "@mui/joy/styles/types";
 
 type Props = PropsWithChildren & {
     title: string;
     showBackButton?: boolean;
+    titleStyle?: SxProps;
+    buttonsStyle?: SxProps;
 };
 
 const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
-    const { title, showBackButton, children } = props;
+    const { title, showBackButton, titleStyle, buttonsStyle, children } = props;
     const router = useRouter();
 
     const navigateBack = () => {
@@ -21,11 +24,22 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
         <PageWrapperContainer>
             <PageTitleAndBackButtonContainer>
                 {showBackButton ? (
-                    <BackButtonContainer size="lg" onClick={navigateBack}>
-                        <BackIcon />
-                    </BackButtonContainer>
+                    <IconButton
+                        size="lg"
+                        sx={{
+                            border: (theme) =>
+                                `2px solid ${theme.vars.palette.primary["500"]}`,
+                            borderRadius: "50%",
+                            ...buttonsStyle,
+                        }}
+                        onClick={navigateBack}
+                    >
+                        <BackIcon sx={{ color: "inherit" }} />
+                    </IconButton>
                 ) : null}
-                <PageTitle level={"h1"}>{title}</PageTitle>
+                <Typography level={"h1"} sx={titleStyle}>
+                    {title}
+                </Typography>
             </PageTitleAndBackButtonContainer>
             {children}
         </PageWrapperContainer>
@@ -54,17 +68,8 @@ const PageTitleAndBackButtonContainer = styled(Box)(() => ({
     position: "sticky",
 }));
 
-const BackButtonContainer = styled(IconButton)(({ theme }) => ({
-    border: `2px solid ${theme.vars.palette.primary["500"]}`,
-    borderRadius: "50%",
-}));
-
 const BackIcon = styled(ArrowBackIcon)(({ theme }) => ({
     color: theme.vars.palette.primary["500"],
-}));
-
-const PageTitle = styled(Typography)(() => ({
-    //color: theme.vars.palette.primary["500"],
 }));
 
 export default PageContentWrapperComponent;

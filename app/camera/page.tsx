@@ -27,7 +27,7 @@ const CameraPage: React.FC = () => {
             titleStyle={pageHeaderTitleStyles}
             buttonsStyle={pageHeaderButtonsStyles}
         >
-            <CameraComponent />
+            <CameraComponent showFilters={false} />
         </PageContentWrapperComponent>
     );
 };

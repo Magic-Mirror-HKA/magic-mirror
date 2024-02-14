@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, {
     ComponentType,
-    useCallback,
+    CSSProperties,
     useEffect,
     useRef,
     useState,
@@ -32,6 +32,16 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import ZoomInMapOutlinedIcon from "@mui/icons-material/ZoomInMapOutlined";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
+import { ContainerSize } from "@/context/ApplicationContext";
+import dynamic from "next/dynamic";
+//import FaceLandMarkerComponent from "@/components/filters/FaceLandMarkerComponent";
+
+const FaceLandmarkCanvasComponent = dynamic(
+    () => {
+        return import("../FaceLandmarkCanvasComponent");
+    },
+    { ssr: false },
+);
 
 const CAMERA_FRAME_MAX_WIDTH = 700;
 const CAMERA_FRAME_MAX_HEIGHT = 400;
@@ -43,8 +53,27 @@ type CameraToolbarButton = {
     onClick: () => void;
 };
 
-const CameraComponent: React.FC = () => {
+type FilterName = "Matrix" | "Engel & Teufel" | "Totenkopf" | "Tiger" | "Wolke";
+
+type FilterItem = {
+    name: FilterName;
+    src: string;
+    isActive: boolean;
+    onClick?: () => void;
+};
+
+type Props = {
+    showFilters: boolean;
+};
+
+const CameraComponent: React.FC<Props> = (props: Props) => {
     const webcamRef = useRef<Webcam | null>(null);
+    const landmarkCanvasRef = useRef<{ landmarkCanvasRef: Webcam } | null>(
+        null,
+    );
+    // const [webcamRefAsState, setWebcamRefAsState] = useState<Webcam | null>(
+    //     null,
+    // );
     const [images, setImages] = useState<string[]>([]);
     const [mirrored, setMirrored] = useState<boolean>(false);
     const [showImages, setShowImages] = useState<boolean>(false);
@@ -52,18 +81,30 @@ const CameraComponent: React.FC = () => {
     const [playScreenShotAnimation, setPlayScreenShotAnimation] =
         useState<boolean>(false);
     const fullScreenContext = useFullScreenContext();
+    //const { gl, scene, camera } = useThree()
+
+    const [selectedFilterItem, setSelectedFilterItem] =
+        useState<FilterName>("Totenkopf");
+
+    const { showFilters } = props;
 
     useEffect(() => {
         setIsCameraLoading(true);
     }, [showImages]);
 
-    const takeScreenshot = useCallback(() => {
-        if (!webcamRef.current) return;
+    const takeScreenshot = () => {
+        //if (!webcamRef.current) return;
         playScreenshotAnimation();
-        const imageSrc = webcamRef.current.getScreenshot();
-        console.log(imageSrc);
-        setImages((prevState) => [...prevState, imageSrc!]);
-    }, [webcamRef]);
+        let imageSrc = "";
+        //console.log(gl.domElement);
+        if (showFilters && landmarkCanvasRef.current) {
+            //imageSr = gl.domElement.toDataURL();
+            //setImages((prevState) => [...prevState, imageSrc!]);
+            return;
+        }
+        imageSrc = webcamRef.current!.getScreenshot()!;
+        setImages((prevState) => [...prevState, imageSrc]);
+    };
 
     const playScreenshotAnimation = () => {
         setPlayScreenShotAnimation(true);
@@ -101,6 +142,55 @@ const CameraComponent: React.FC = () => {
         fullScreenContext.goFullScreen();
     };
 
+    const filterItems: FilterItem[] = [
+        {
+            name: "Matrix",
+            src: "/matrix.png",
+            isActive: selectedFilterItem === "Matrix",
+            onClick: () => setSelectedFilterItem("Matrix"),
+        },
+        {
+            name: "Engel & Teufel",
+            src: "/angel-and-devil.png",
+            isActive: selectedFilterItem === "Engel & Teufel",
+            onClick: () => setSelectedFilterItem("Engel & Teufel"),
+        },
+        {
+            name: "Totenkopf",
+            src: "/skull_mask_placeholder.png",
+            isActive: selectedFilterItem === "Totenkopf",
+            onClick: () => setSelectedFilterItem("Totenkopf"),
+        },
+        {
+            name: "Tiger",
+            src: "/tiger.png",
+            isActive: selectedFilterItem === "Tiger",
+            onClick: () => setSelectedFilterItem("Tiger"),
+        },
+        {
+            name: "Wolke",
+            src: "/cloud_thunder.png",
+            isActive: selectedFilterItem === "Wolke",
+            onClick: () => setSelectedFilterItem("Wolke"),
+        },
+    ];
+
+    const getCameraFrameStyle = (parentSize: ContainerSize): CSSProperties => {
+        return {
+            objectFit: "cover",
+            borderRadius: "var(--space-5)",
+            height: fullScreenContext.isFullScreen
+                ? parentSize.height
+                : CAMERA_FRAME_MAX_HEIGHT,
+            width: "100%",
+            opacity: playScreenShotAnimation ? "10%" : "unset",
+        };
+    };
+
+    const resolveFilterComponent = showFilters ? (
+        <FilterListComponent filterItems={filterItems} />
+    ) : null;
+
     // TODO: Integrate the Google API for face recognition!
     return (
         <MainContainer minimizeRow={!showImages}>
@@ -114,29 +204,46 @@ const CameraComponent: React.FC = () => {
                 <React.Fragment>
                     <CameraFrame isFullScreen={fullScreenContext.isFullScreen}>
                         {isCameraLoading ? <LoadComponent /> : null}
+                        {!fullScreenContext.isFullScreen
+                            ? resolveFilterComponent
+                            : null}
                         <ResizeToParentSizeComponent>
                             {(parentSize) => (
-                                <Webcam
-                                    ref={webcamRef}
-                                    mirrored={mirrored}
-                                    onUserMedia={() =>
-                                        setIsCameraLoading(false)
-                                    }
-                                    style={{
-                                        objectFit: "cover",
-                                        borderRadius: "var(--space-5)",
-                                        height: fullScreenContext.isFullScreen
-                                            ? parentSize.height
-                                            : CAMERA_FRAME_MAX_HEIGHT,
-                                        width: "100%",
-                                        opacity: playScreenShotAnimation
-                                            ? "10%"
-                                            : "unset",
-                                    }}
-                                />
+                                <React.Fragment>
+                                    <Webcam
+                                        id="webcam"
+                                        ref={webcamRef}
+                                        mirrored={mirrored}
+                                        onUserMedia={() =>
+                                            setIsCameraLoading(false)
+                                        }
+                                        style={{
+                                            display: showFilters
+                                                ? "none"
+                                                : "block",
+                                            ...getCameraFrameStyle(parentSize),
+                                        }}
+                                    />
+                                    {showFilters ? (
+                                        // <FaceLandMarkerComponent
+                                        //     webcamRef={webcamRefAsState}
+                                        //     canvasStyles={{
+                                        //         ...getCameraFrameStyle(
+                                        //             parentSize,
+                                        //         ),
+                                        //     }}
+                                        // />
+                                        <FaceLandmarkCanvasComponent
+                                            parentSize={parentSize}
+                                        />
+                                    ) : null}
+                                </React.Fragment>
                             )}
                         </ResizeToParentSizeComponent>
                     </CameraFrame>
+                    {fullScreenContext.isFullScreen
+                        ? resolveFilterComponent
+                        : null}
                     <CameraToolbarWrapper
                         isFullScreen={fullScreenContext.isFullScreen}
                     >
@@ -165,7 +272,7 @@ const CameraComponent: React.FC = () => {
                                 />
                             </Badge>
                         ) : (
-                            <Box></Box>
+                            <div></div>
                         )}
                         <CameraToolbarContainer>
                             {cameraToolbarButtons.map((button, index) => (
@@ -240,37 +347,14 @@ const ImageListComponent: React.FC<PropsImageList> = (
     const handlePrintPicture = () => {};
 
     return (
-        <Box
-            sx={{
-                display: "grid",
-                gap: "var(--space-4)",
-                gridTemplateRows: `${CAMERA_FRAME_MAX_HEIGHT}px max-content`,
-            }}
-        >
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    flexWrap: "wrap",
-                    gap: "var(--space-8)",
-                    overflowY: "auto",
-                    overflowX: "hidden",
-                    px: 3,
-                    py: 3,
-                }}
-            >
+        <ImageListContainer height={CAMERA_FRAME_MAX_HEIGHT}>
+            <AlertAndAvatarListContainer>
                 {images.length === 0 ? (
-                    <Alert
-                        size="lg"
-                        sx={{
-                            boxShadow: "0 0 5px var(--color-primary)",
-                        }}
-                    >
+                    <AlertContainer size="lg">
                         Keine Bilder gefunden. Drücke auf{" "}
                         {<AddAPhotoOutlinedIcon color="primary" />}, um weitere
                         Bilder aufzunehmen.
-                    </Alert>
+                    </AlertContainer>
                 ) : null}
                 {images.map((image) => (
                     <Badge
@@ -301,28 +385,11 @@ const ImageListComponent: React.FC<PropsImageList> = (
                         />
                     </Badge>
                 ))}
-            </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    gap: "var(--space-8)",
-                    justifyItems: "center",
-                    justifyContent: "center",
-                    alignSelf: "end",
-                    justifySelf: "center",
-                    boxShadow: "0 0 5px grey",
-                    borderRadius: "var(--space-10)",
-                    padding: "var(--space-2) var(--space-4)",
-                }}
-            >
+            </AlertAndAvatarListContainer>
+            <IconListContainer>
                 {toolbarButtons.map((button, index) => (
-                    <IconButton
+                    <IconListItemIconButton
                         key={index}
-                        sx={{
-                            padding: "var(--space-4)",
-                            borderRadius: "50%",
-                            boxShadow: "0 0 1px grey",
-                        }}
                         disabled={button.disabled}
                         onClick={button.onClick}
                     >
@@ -332,27 +399,22 @@ const ImageListComponent: React.FC<PropsImageList> = (
                                 fontSize: "var(--font-3xLarge)",
                             }}
                         />
-                    </IconButton>
+                    </IconListItemIconButton>
                 ))}
-            </Box>
-        </Box>
+            </IconListContainer>
+        </ImageListContainer>
     );
 };
 
+const ImageListContainer = styled(Box)<{ height: number }>`
+    display: grid;
+    gap: var(--space-4);
+    grid-template-rows: ${(props) => props.height}px max-content;
+`;
+
 const LoadComponent: React.FC = () => {
     return (
-        <Box
-            sx={{
-                display: "grid",
-                gap: "var(--space-3)",
-                justifyContent: "center",
-                justifyItems: "center",
-                position: "absolute",
-                left: "50%",
-                //right: "50%",
-                transform: "translate(-50%)",
-            }}
-        >
+        <LoadingContainer>
             <CircularProgress color="primary" />
             <Typography
                 level="title-md"
@@ -361,7 +423,60 @@ const LoadComponent: React.FC = () => {
             >
                 Verbindung zur Kamera wird hergestellt
             </Typography>
-        </Box>
+        </LoadingContainer>
+    );
+};
+
+type PropsFilterList = {
+    filterItems: FilterItem[];
+};
+const FilterListComponent: React.FC<PropsFilterList> = (
+    props: PropsFilterList,
+) => {
+    const { filterItems } = props;
+    return (
+        <FilterListContainer>
+            {filterItems.map((f, index) => (
+                <div
+                    key={index}
+                    style={{
+                        display: "grid",
+                        gap: 0.25,
+                        justifyContent: "center",
+                        justifyItems: "center",
+                        width: "100px",
+                        // "&:hover": {
+                        //     cursor: "pointer",
+                        // },
+                    }}
+                    onClick={f.onClick}
+                >
+                    <Avatar
+                        src={f.src}
+                        size="lg"
+                        sx={{
+                            border: f.isActive
+                                ? "2px solid var(--color-primary)"
+                                : "2px solid var(--color-white)",
+                        }}
+                    />
+                    <Typography
+                        sx={{
+                            color: "var(--color-white)",
+                            backgroundColor: f.isActive
+                                ? "var(--color-primary)"
+                                : "unset",
+                            p: "var(--space-1) var(--space-2)",
+                            borderRadius: "var(--space-1)",
+                        }}
+                        textAlign="center"
+                        noWrap
+                    >
+                        {f.name}
+                    </Typography>
+                </div>
+            ))}
+        </FilterListContainer>
     );
 };
 
@@ -389,7 +504,7 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     border-radius: var(--space-5);
     position: ${(props) => (props.isFullScreen ? "absolute" : "relative")};
     bottom: ${(props) => (props.isFullScreen ? 0 : "unset")};
-    z-index: ${(props) => (props.isFullScreen ? -3 : "unset")};
+    z-index: ${(props) => (props.isFullScreen ? -1 : "unset")};
 `;
 
 const CameraToolbarWrapper = styled(Box)<{ isFullScreen: boolean }>`
@@ -423,6 +538,68 @@ const ToolbarButtonContainer = styled(IconButton)<{ isFullScreen: boolean }>`
     &:hover {
         color: var(--color-primary);
     }
+`;
+
+const LoadingContainer = styled(Box)`
+    display: grid;
+    gap: var(--space-3);
+    justify-content: center;
+    justify-items: center;
+    position: absolute;
+    left: 50%;
+    //right: "50%",
+    transform: translate(-50%);
+`;
+
+const FilterListContainer = styled(Box)`
+    display: flex;
+    gap: var(--space-5);
+    //flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
+    position: absolute;
+    top: 70%;
+    transform: translateY(-30%);
+    //right: 15%;
+    //transform: translateX(95%);
+    max-width: 85%;
+    //max-height: 90%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 5;
+`;
+
+const AlertAndAvatarListContainer = styled(Box)`
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--space-3);
+`;
+
+const AlertContainer = styled(Alert)`
+    box-shadow: 0 0 5px var(--color-primary);
+`;
+
+const IconListContainer = styled(Box)`
+    display: flex;
+    gap: var(--space-8);
+    justify-items: center;
+    justify-content: center;
+    align-self: end;
+    justify-self: center;
+    box-shadow: 0 0 5px grey;
+    border-radius: var(--space-10);
+    padding: var(--space-2) var(--space-4);
+`;
+
+const IconListItemIconButton = styled(IconButton)`
+    padding: var(--space-4);
+    border-radius: 50%;
+    box-shadow: 0 0 1px grey;
 `;
 
 export default CameraComponent;

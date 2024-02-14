@@ -22,10 +22,10 @@ const Home: React.FC = () => {
             onClick: () => router.push("/camera"),
         },
         {
-            label: "Filter",
+            label: "Animationen",
             // @ts-expect-error
             icon: <MasksIcon fontSize="inherit" sx={IconStyle} />,
-            onClick: () => alert("In dev"),
+            onClick: () => router.push("/filter"),
         },
         {
             label: "Spiele",

@@ -9,7 +9,7 @@ type Props = {
 const SelectableItemComponent: React.FC<Props> = (props: Props) => {
     const { item } = props;
     return (
-        <ItemContainer onClick={item.onClick}>
+        <ItemContainer>
             <ItemIconContainer onClick={item.onClick}>
                 {item.icon}
             </ItemIconContainer>

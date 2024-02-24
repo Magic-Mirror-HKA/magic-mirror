@@ -1,8 +1,19 @@
-import { ReactNode } from "react";
+"use client";
+import React, {
+    ComponentType,
+    createContext,
+    FC,
+    PropsWithChildren,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import * as THREE from "three";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-import { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { SvgIconOwnProps } from "@mui/material";
 
 export type SelectablePageItem = {
     label: ReactNode;
@@ -13,6 +24,40 @@ export type SelectablePageItem = {
 export type ContainerSize = {
     width: number;
     height: number;
+};
+
+export type AnimationFilterName =
+    | "Matrix"
+    | "Engel & Teufel"
+    | "Totenkopf"
+    | "Tiger"
+    | "Wolke";
+
+export type BackgroundFilterName =
+    | "Eingang"
+    | "HKA BIB"
+    | "Gebaeude B"
+    | "HKA R Gebaeude";
+
+type BaseAttributeFilterItem = {
+    src: string;
+    isActive: boolean;
+    onClick?: () => void;
+};
+
+export type FilterItem =
+    | (BaseAttributeFilterItem & {
+          name: AnimationFilterName;
+      })
+    | (BaseAttributeFilterItem & {
+          name: BackgroundFilterName;
+      });
+
+export type CameraToolbarButton = {
+    icon: ComponentType<SvgIconOwnProps>;
+    isLarge?: boolean;
+    disabled?: boolean;
+    onClick: () => void;
 };
 
 export const CAMERA_FRAME_MAX_WIDTH = 700;
@@ -52,4 +97,89 @@ export const loadGltf = async (url: string): Promise<GLTF> => {
             (error: unknown) => reject(error),
         );
     });
+};
+
+type Output = {
+    // Filter
+    filterItems: FilterItem[];
+    selectedFilterItem: FilterItem;
+    setFilterItems: (items: FilterItem[]) => void;
+    setSelectedFilterItem: (item?: FilterItem | undefined) => void;
+    clearFilterItems: () => void;
+
+    // Images captured from Camera component
+    images: string[];
+    addImage: (image: string) => void;
+    removeImage: (image: string) => void;
+    clearImages: () => void;
+};
+
+// @ts-ignore
+const AppContext = createContext<Output>({});
+
+// TODO. Clear the filter items inside this hook.
+export const useAppContext = () => {
+    const context = useContext<Output>(AppContext);
+
+    useEffect(() => {
+        return () => {
+            // Clear Filter list on unmount
+            context.clearFilterItems();
+
+            // Clear image list on unmount
+            // context.clearImages();
+        };
+    }, []);
+
+    return context;
+};
+
+type PropsAppContextProvider = PropsWithChildren;
+export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
+    props: PropsAppContextProvider,
+) => {
+    const { children } = props;
+
+    // Filter
+    const [filterItems, setFilterItems] = useState<FilterItem[]>([]);
+    const [selectedFilterItem, setSelectedFilterItem] = useState<
+        FilterItem | undefined
+    >(undefined);
+
+    // Images captured from Camera component
+    const [images, setImages] = useState<string[]>([]);
+
+    const clearFilterItems = () => {
+        setFilterItems([]);
+    };
+
+    const addImage = (image: string) => {
+        setImages((prevState) => [...prevState, image]);
+    };
+
+    const removeImage = (image: string) => {
+        setImages((prevState) => prevState.filter((i) => i !== image));
+    };
+
+    const clearImages = () => {
+        setImages([]);
+    };
+
+    return (
+        <AppContext.Provider
+            value={{
+                filterItems,
+                selectedFilterItem: selectedFilterItem!,
+                setFilterItems,
+                setSelectedFilterItem: setSelectedFilterItem,
+                clearFilterItems,
+                images,
+                addImage,
+                removeImage,
+                clearImages,
+            }}
+        >
+            {children}
+        </AppContext.Provider>
+    );
 };

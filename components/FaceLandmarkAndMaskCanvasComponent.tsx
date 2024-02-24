@@ -4,6 +4,9 @@ import {
     CAMERA_FRAME_MAX_HEIGHT,
     CAMERA_FRAME_MAX_WIDTH,
     ContainerSize,
+    FilterItem,
+    AnimationFilterName,
+    useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
 import { Box } from "@mui/joy";
@@ -18,7 +21,11 @@ import DrawLandmarkCanvas from "@/components/DrawLandmarkCanvas";
 type Props = {
     parentSize: ContainerSize;
 };
-const FaceLandmarkCanvasComponent: React.FC<Props> = (props: Props) => {
+const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
+    const fullScreenContext = useFullScreenContext();
+    const appContext = useAppContext();
+
+    const { parentSize } = props;
     const videoRef = useRef<Webcam | null>(null);
     const lastVideoTimeRef = useRef(-1);
     const requestRef = useRef<number>(0);
@@ -28,18 +35,62 @@ const FaceLandmarkCanvasComponent: React.FC<Props> = (props: Props) => {
     const [videoSize, setVideoSize] = useState<ContainerSize | undefined>(
         undefined,
     );
-    const fullScreenContext = useFullScreenContext();
 
-    const { parentSize } = props;
-
-    //const toggleAvatarView = () => setFilterView((prev) => !prev);
-
-    //const toggleAvatarCreatorView = () => setShowAvatarCreator((prev) => !prev);
-
+    // const toggleAvatarView = () => setFilterView((prev) => !prev);
+    // const toggleAvatarCreatorView = () => setShowAvatarCreator((prev) => !prev);
     // const handleAvatarCreationComplete = (url: string) => {
     //     setModelUrl(url);
     //     toggleAvatarCreatorView();
     // };
+
+    useEffect(() => {
+        appContext.setFilterItems(filterItems);
+        // Initial selected filter
+        appContext.setSelectedFilterItem(
+            filterItems.find((f) => f.name === "Totenkopf"),
+        );
+    }, []);
+
+    const handleClickFilterItem = (itemName: AnimationFilterName) => {
+        // TODO: CHANGE MASK HIER
+        //setModelUrl(itemName);
+        appContext.setSelectedFilterItem(
+            filterItems.find((f) => f.name === itemName),
+        );
+    };
+
+    const filterItems: FilterItem[] = [
+        {
+            name: "Matrix",
+            src: "/matrix.png",
+            isActive: appContext.selectedFilterItem?.name === "Matrix",
+            onClick: () => handleClickFilterItem("Matrix"),
+        },
+        {
+            name: "Engel & Teufel",
+            src: "/angel-and-devil.png",
+            isActive: appContext.selectedFilterItem?.name === "Engel & Teufel",
+            onClick: () => handleClickFilterItem("Engel & Teufel"),
+        },
+        {
+            name: "Totenkopf",
+            src: "/skull_mask_placeholder.png",
+            isActive: appContext.selectedFilterItem?.name === "Totenkopf",
+            onClick: () => handleClickFilterItem("Totenkopf"),
+        },
+        {
+            name: "Tiger",
+            src: "/tiger.png",
+            isActive: appContext.selectedFilterItem?.name === "Tiger",
+            onClick: () => handleClickFilterItem("Tiger"),
+        },
+        {
+            name: "Wolke",
+            src: "/cloud_thunder.png",
+            isActive: appContext.selectedFilterItem?.name === "Wolke",
+            onClick: () => handleClickFilterItem("Wolke"),
+        },
+    ];
 
     const animate = () => {
         if (
@@ -148,4 +199,4 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     z-index: ${(props) => (props.isFullScreen ? -1 : "unset")};
 `;
 
-export default FaceLandmarkCanvasComponent;
+export default FaceLandmarkAndMaskCanvasComponent;

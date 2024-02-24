@@ -1,23 +1,42 @@
 "use client";
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
 import React, { PropsWithChildren } from "react";
 import { Box, IconButton, styled, Typography } from "@mui/joy";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
 import { SxProps } from "@mui/joy/styles/types";
+import { useFullScreenContext } from "@/context/FullScreenContext";
 
 type Props = PropsWithChildren & {
     title: string;
     showBackButton?: boolean;
-    titleStyle?: SxProps;
-    buttonsStyle?: SxProps;
+    // titleStyle?: SxProps;
+    // buttonsStyle?: SxProps;
 };
 
 const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
-    const { title, showBackButton, titleStyle, buttonsStyle, children } = props;
+    const { title, showBackButton, children } = props;
     const router = useRouter();
 
     const navigateBack = () => {
         router.back();
+    };
+
+    const fullScreenContext = useFullScreenContext();
+
+    const pageHeaderTitleStyles: SxProps = {
+        color: fullScreenContext.isFullScreen ? "var(--color-white)" : "unset",
+        //textShadow: "var(--color-white) 1px 0 1px",
+    };
+
+    const pageHeaderButtonsStyles: SxProps = {
+        color: fullScreenContext.isFullScreen
+            ? "var(--color-white)"
+            : "var(--color-primary)",
+        border: fullScreenContext.isFullScreen
+            ? "2px solid var(--color-white)"
+            : "2px solid var(--color-primary)",
     };
 
     return (
@@ -30,14 +49,14 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
                             border: (theme) =>
                                 `2px solid ${theme.vars.palette.primary["500"]}`,
                             borderRadius: "50%",
-                            ...buttonsStyle,
+                            ...pageHeaderButtonsStyles,
                         }}
                         onClick={navigateBack}
                     >
                         <BackIcon sx={{ color: "inherit" }} />
                     </IconButton>
                 ) : null}
-                <Typography level={"h1"} sx={titleStyle}>
+                <Typography level={"h1"} sx={pageHeaderTitleStyles}>
                     {title}
                 </Typography>
             </PageTitleAndBackButtonContainer>

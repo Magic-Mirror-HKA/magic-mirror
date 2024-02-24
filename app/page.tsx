@@ -31,7 +31,7 @@ const Home: React.FC = () => {
             label: "Spiele",
             // @ts-expect-error
             icon: <SportsEsportsIcon fontSize="inherit" sx={IconStyle} />,
-            onClick: () => alert("In dev"),
+            onClick: () => router.push("/games"),
         },
         {
             label: "Einstellungen",

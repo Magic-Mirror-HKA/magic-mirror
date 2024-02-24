@@ -5,6 +5,7 @@ import React, {
     createContext,
     PropsWithChildren,
     useContext,
+    useEffect,
     useState,
 } from "react";
 
@@ -18,7 +19,13 @@ type ContextOutput = {
 const FullScreenContext = createContext<ContextOutput>({});
 
 export const useFullScreenContext = () => {
-    return useContext<ContextOutput>(FullScreenContext);
+    const context = useContext<ContextOutput>(FullScreenContext);
+
+    useEffect(() => {
+        return () => context.exitFullScreen();
+    }, []);
+
+    return context;
 };
 
 type Props = PropsWithChildren;

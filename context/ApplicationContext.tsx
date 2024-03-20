@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable no-unused-vars, @typescript-eslint/ban-ts-comment */
 "use client";
 import React, {
     ComponentType,
@@ -10,10 +12,11 @@ import React, {
     useState,
 } from "react";
 import * as THREE from "three";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 // @ts-expect-error
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { SvgIconOwnProps } from "@mui/material";
+import Webcam from "react-webcam";
 
 export type SelectablePageItem = {
     label: ReactNode;
@@ -40,8 +43,12 @@ export type BackgroundFilterName =
     | "HKA R Gebaeude";
 
 type BaseAttributeFilterItem = {
+    id: string;
     src: string;
     isActive: boolean;
+    threeDModel?:
+        | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
+        | undefined;
     onClick?: () => void;
 };
 
@@ -100,6 +107,10 @@ export const loadGltf = async (url: string): Promise<GLTF> => {
 };
 
 type Output = {
+    // Camera
+    webcamInstance: Webcam | undefined;
+    setWebcamInstance: (webcamInstance: Webcam) => void;
+
     // Filter
     filterItems: FilterItem[];
     selectedFilterItem: FilterItem;
@@ -145,6 +156,9 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     const [selectedFilterItem, setSelectedFilterItem] = useState<
         FilterItem | undefined
     >(undefined);
+    const [webcamInstance, setWebcamInstance] = useState<Webcam | undefined>(
+        undefined,
+    );
 
     // Images captured from Camera component
     const [images, setImages] = useState<string[]>([]);
@@ -168,6 +182,8 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     return (
         <AppContext.Provider
             value={{
+                webcamInstance: webcamInstance,
+                setWebcamInstance,
                 filterItems,
                 selectedFilterItem: selectedFilterItem!,
                 setFilterItems,

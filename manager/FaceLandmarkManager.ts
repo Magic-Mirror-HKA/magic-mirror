@@ -52,10 +52,13 @@ class FaceLandmarkManager {
 
     drawLandmarks = (canvas: HTMLCanvasElement) => {
         const ctx = canvas.getContext("2d");
-        if (!ctx || !this.results?.faceLandmarks) return;
+        if (!ctx || !this.results?.faceLandmarks) return undefined;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const drawingUtils = new DrawingUtils(ctx);
+
+        // Results
+        // console.log(this.results);
 
         const lineWidth = 1.3;
         for (const landmarks of this.results.faceLandmarks) {

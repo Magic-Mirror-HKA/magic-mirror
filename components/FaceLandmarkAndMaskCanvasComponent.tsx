@@ -9,7 +9,7 @@ import {
     useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
-import { Box } from "@mui/joy";
+import { Alert, Box } from "@mui/joy";
 import WebcamComponent from "@/components/shared/WebcamComponent";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
@@ -17,6 +17,12 @@ import FaceLandmarkManager from "@/manager/FaceLandmarkManager";
 import Webcam from "react-webcam";
 import AvatarCanvas from "@/components/shared/AvatarCanvas";
 import DrawLandmarkCanvas from "@/components/DrawLandmarkCanvas";
+import { v4 as uuid } from "uuid";
+import { AngelDemonFight } from "@/models/AngelDemonFight";
+import { SkullMask } from "@/models/SkullMask";
+import { TigerHead } from "@/models/TigerHead";
+import { Html } from "@react-three/drei";
+import InfoIcon from "@mui/icons-material/Info";
 
 type Props = {
     parentSize: ContainerSize;
@@ -30,8 +36,6 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     const lastVideoTimeRef = useRef(-1);
     const requestRef = useRef<number>(0);
     const [filterView] = useState<boolean>(true);
-    //const [showAvatarCreator, setShowAvatarCreator] = useState<boolean>(false);
-    const [modelUrl] = useState("/skull_mask_clean.glb");
     const [videoSize, setVideoSize] = useState<ContainerSize | undefined>(
         undefined,
     );
@@ -43,14 +47,6 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     //     toggleAvatarCreatorView();
     // };
 
-    useEffect(() => {
-        appContext.setFilterItems(filterItems);
-        // Initial selected filter
-        appContext.setSelectedFilterItem(
-            filterItems.find((f) => f.name === "Totenkopf"),
-        );
-    }, []);
-
     const handleClickFilterItem = (itemName: AnimationFilterName) => {
         // TODO: CHANGE MASK HIER
         //setModelUrl(itemName);
@@ -59,34 +55,55 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         );
     };
 
+    useEffect(() => {
+        appContext.setFilterItems(filterItems);
+        // Initial selected filter
+        appContext.setSelectedFilterItem(
+            filterItems.find((f) => f.name === "Totenkopf"),
+        );
+    }, []);
+
+    const inDevelopmentAlertMessageComponent = () => (
+        <InDevelopmentAlertMessage parentWidth={parentSize.width} />
+    );
     const filterItems: FilterItem[] = [
         {
+            id: uuid(),
             name: "Matrix",
             src: "/matrix.png",
+            threeDModel: inDevelopmentAlertMessageComponent,
             isActive: appContext.selectedFilterItem?.name === "Matrix",
             onClick: () => handleClickFilterItem("Matrix"),
         },
         {
+            id: uuid(),
             name: "Engel & Teufel",
-            src: "/angel-and-devil.png",
+            src: "/angel-and-demon.png",
+            threeDModel: AngelDemonFight,
             isActive: appContext.selectedFilterItem?.name === "Engel & Teufel",
             onClick: () => handleClickFilterItem("Engel & Teufel"),
         },
         {
+            id: uuid(),
             name: "Totenkopf",
             src: "/skull_mask_placeholder.png",
+            threeDModel: SkullMask,
             isActive: appContext.selectedFilterItem?.name === "Totenkopf",
             onClick: () => handleClickFilterItem("Totenkopf"),
         },
         {
+            id: uuid(),
             name: "Tiger",
             src: "/tiger.png",
+            threeDModel: TigerHead,
             isActive: appContext.selectedFilterItem?.name === "Tiger",
             onClick: () => handleClickFilterItem("Tiger"),
         },
         {
+            id: uuid(),
             name: "Wolke",
             src: "/cloud_thunder.png",
+            threeDModel: inDevelopmentAlertMessageComponent,
             isActive: appContext.selectedFilterItem?.name === "Wolke",
             onClick: () => handleClickFilterItem("Wolke"),
         },
@@ -163,14 +180,24 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                     <>
                         {filterView ? (
                             <AvatarCanvas
+                                webcamInstance={
+                                    (videoRef.current as Webcam)
+                                        .video as HTMLVideoElement
+                                }
                                 //width={videoSize.width}
                                 width={parentSize.width}
                                 //height={videoSize.height}
                                 height={parentSize.height}
-                                url={modelUrl}
+                                ThreeDModel={
+                                    appContext.selectedFilterItem.threeDModel!
+                                }
                             />
                         ) : (
                             <DrawLandmarkCanvas
+                                videoElement={
+                                    (videoRef.current as Webcam)
+                                        .video as HTMLVideoElement
+                                }
                                 width={videoSize.width}
                                 height={videoSize.height}
                             />
@@ -179,6 +206,56 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                 ) : null}
             </div>
         </div>
+    );
+};
+
+type PropsInDevelopmentAlertMessage = {
+    parentWidth: number;
+};
+const InDevelopmentAlertMessage: React.FC<PropsInDevelopmentAlertMessage> = (
+    props: PropsInDevelopmentAlertMessage,
+) => {
+    const { parentWidth } = props;
+    const { isFullScreen } = useFullScreenContext();
+
+    // Da Diese Komponente in einem Canvas im Sinne von Three.js oder R3F gerendert wird,
+    // muss sie den Html aus @react-three/drei als Container haben.
+    return (
+        <Html
+            style={{
+                position: "absolute",
+                top: isFullScreen ? 60 : 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: parentWidth,
+            }}
+        >
+            <div
+                style={{
+                    display: "grid",
+                    justifyItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <Alert
+                    size="sm"
+                    startDecorator={
+                        <InfoIcon
+                            fontSize="small"
+                            sx={{ color: "var(--color-primary)" }}
+                        />
+                    }
+                    sx={{
+                        maxWidth: "480px",
+                        boxShadow: "0 0 10px grey",
+                        color: "var(--color-primary)",
+                    }}
+                >
+                    Dieser Filter ist in Entwicklung und wird bald verfügbar
+                    sein.
+                </Alert>
+            </div>
+        </Html>
     );
 };
 

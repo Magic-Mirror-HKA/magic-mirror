@@ -36,9 +36,12 @@ export const FilterListComponent: React.FC<PropsFilterList> = (
                         sx={{
                             border:
                                 f.name === selectedFilterItem.name
-                                    ? "2px solid var(--color-primary)"
-                                    : "2px solid var(--color-white)",
+                                    ? "1px solid var(--color-primary)"
+                                    : "1px solid var(--color-white)",
                             borderRadius: "30%",
+                            boxShadow: "0 0 6px var(--color-white)",
+                            mt: 0.2,
+                            mb: 0.2,
                         }}
                     />
                     <Typography

@@ -6,10 +6,10 @@ import {
     CAMERA_FRAME_MAX_WIDTH,
     ContainerSize,
     FilterItem,
-    useAppContext
+    useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
-import { Alert, Box } from "@mui/joy";
+import { Box } from "@mui/joy";
 import WebcamComponent from "@/components/shared/WebcamComponent";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
@@ -21,8 +21,6 @@ import { v4 as uuid } from "uuid";
 import { AngelDemonFight } from "@/models/AngelDemonFight";
 import { SkullMask } from "@/models/SkullMask";
 import { TigerHead } from "@/models/TigerHead";
-import { Html } from "@react-three/drei";
-import InfoIcon from "@mui/icons-material/Info";
 import { AlertMessageOnCameraComponent } from "@/components/shared/AlertMessageOnCameraComponent";
 
 type Props = {
@@ -38,7 +36,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     const requestRef = useRef<number>(0);
     const [filterView] = useState<boolean>(true);
     const [videoSize, setVideoSize] = useState<ContainerSize | undefined>(
-      undefined,
+        undefined,
     );
 
     // const toggleAvatarView = () => setFilterView((prev) => !prev);
@@ -52,7 +50,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         // TODO: CHANGE MASK HIER
         //setModelUrl(itemName);
         appContext.setSelectedFilterItem(
-          filterItems.find((f) => f.name === itemName),
+            filterItems.find((f) => f.name === itemName),
         );
     };
 
@@ -60,15 +58,17 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         appContext.setFilterItems(filterItems);
         // Initial selected filter
         appContext.setSelectedFilterItem(
-          filterItems.find((f) => f.name === "Totenkopf"),
+            filterItems.find((f) => f.name === "Totenkopf"),
         );
     }, []);
 
     const inDevelopmentAlertMessageComponent = () => (
-      <AlertMessageOnCameraComponent
-        parentWidth={parentSize.width}
-        message={"Dieser Filter ist in Entwicklung aber wird bald verfügbar sein."}
-      />
+        <AlertMessageOnCameraComponent
+            parentWidth={parentSize.width}
+            message={
+                "Dieser Filter ist in Entwicklung aber wird bald verfügbar sein."
+            }
+        />
     );
 
     const filterItems: FilterItem[] = [
@@ -116,16 +116,16 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
 
     const animate = () => {
         if (
-          videoRef.current &&
-          videoRef.current?.video &&
-          videoRef.current?.video.currentTime !== lastVideoTimeRef.current
+            videoRef.current &&
+            videoRef.current?.video &&
+            videoRef.current?.video.currentTime !== lastVideoTimeRef.current
         ) {
             lastVideoTimeRef.current = videoRef.current.video.currentTime;
             try {
                 const faceLandmarkManager = FaceLandmarkManager.getInstance();
                 faceLandmarkManager.detectLandmarks(
-                  videoRef.current.video,
-                  Date.now(),
+                    videoRef.current.video,
+                    Date.now(),
                 );
             } catch (e: unknown) {
                 console.error(e);
@@ -163,54 +163,54 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
     return (
-      <div>
-          <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                justifyItems: "center",
-            }}
-          >
-              <CameraFrame isFullScreen={fullScreenContext.isFullScreen}>
-                  <ResizeToParentSizeComponent>
-                      {(parentSize) => (
-                        <WebcamComponent
-                          ref={videoRef}
-                          parentSize={parentSize}
-                        />
-                      )}
-                  </ResizeToParentSizeComponent>
-              </CameraFrame>
-              {videoSize ? (
-                <>
-                    {filterView ? (
-                      <AvatarCanvas
-                        webcamInstance={
-                            (videoRef.current as Webcam)
-                              .video as HTMLVideoElement
-                        }
-                        //width={videoSize.width}
-                        width={parentSize.width}
-                        //height={videoSize.height}
-                        height={parentSize.height}
-                        ThreeDModel={
-                            appContext.selectedFilterItem.threeDModel!
-                        }
-                      />
-                    ) : (
-                      <DrawLandmarkCanvas
-                        videoElement={
-                            (videoRef.current as Webcam)
-                              .video as HTMLVideoElement
-                        }
-                        width={videoSize.width}
-                        height={videoSize.height}
-                      />
-                    )}
-                </>
-              ) : null}
-          </div>
-      </div>
+        <div>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    justifyItems: "center",
+                }}
+            >
+                <CameraFrame isFullScreen={fullScreenContext.isFullScreen}>
+                    <ResizeToParentSizeComponent>
+                        {(parentSize) => (
+                            <WebcamComponent
+                                ref={videoRef}
+                                parentSize={parentSize}
+                            />
+                        )}
+                    </ResizeToParentSizeComponent>
+                </CameraFrame>
+                {videoSize ? (
+                    <>
+                        {filterView ? (
+                            <AvatarCanvas
+                                webcamInstance={
+                                    (videoRef.current as Webcam)
+                                        .video as HTMLVideoElement
+                                }
+                                //width={videoSize.width}
+                                width={parentSize.width}
+                                //height={videoSize.height}
+                                height={parentSize.height}
+                                ThreeDModel={
+                                    appContext.selectedFilterItem.threeDModel!
+                                }
+                            />
+                        ) : (
+                            <DrawLandmarkCanvas
+                                videoElement={
+                                    (videoRef.current as Webcam)
+                                        .video as HTMLVideoElement
+                                }
+                                width={videoSize.width}
+                                height={videoSize.height}
+                            />
+                        )}
+                    </>
+                ) : null}
+            </div>
+        </div>
     );
 };
 
@@ -220,9 +220,9 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     justify-items: center;
     background-color: var(--color-black);
     max-width: ${(props) =>
-            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
+        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
     max-height: ${(props) =>
-            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
+        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
     width: 100%;
     height: 100%;
     border-radius: var(--space-5);

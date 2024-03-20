@@ -7,7 +7,6 @@ import React, {
     forwardRef,
     MutableRefObject,
     ReactNode,
-    useEffect,
     useState,
 } from "react";
 import Webcam from "react-webcam";
@@ -213,6 +212,7 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     display: grid;
     align-items: center;
     justify-items: center;
+    box-shadow: ${(props) => props.isFullScreen ? "unset" : "0 0 20px grey"};
     background-color: var(--color-black);
     max-width: ${(props) =>
         props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};

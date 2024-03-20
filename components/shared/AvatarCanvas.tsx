@@ -1,5 +1,5 @@
 import { Canvas, extend } from "@react-three/fiber";
-import React, { ComponentType, Suspense, useEffect } from "react";
+import React, { ComponentType, Suspense } from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 extend({ OrbitControls });
 import { LoadingComponent } from "@/components/shared/LoadingComponent";

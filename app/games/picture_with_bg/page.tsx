@@ -10,6 +10,7 @@ import { useSelfieSegmentation } from "@/hooks/useSelfieSegmentation";
 import { CanvasComponent } from "@/components/shared/CanvasComponent";
 import CameraComponent from "@/components/shared/CameraComponent";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
+import { v4 as uuid } from "uuid";
 
 const PictureWithBackgroundComponent: React.FC = () => {
     const appContext = useAppContext();
@@ -54,6 +55,7 @@ const PictureWithBackgroundComponent: React.FC = () => {
 
     const filterItems: FilterItem[] = [
         {
+            id: uuid(),
             name: "Eingang",
             src: "/campus_hka_1.svg",
             isActive: appContext.selectedFilterItem?.name === "Eingang",
@@ -61,6 +63,7 @@ const PictureWithBackgroundComponent: React.FC = () => {
                 handleClickFilterItem("Eingang", "/campus_hka_1.svg"),
         },
         {
+            id: uuid(),
             name: "Gebaeude B",
             src: "/gebaeude_b.png",
             isActive: appContext.selectedFilterItem?.name === "Gebaeude B",
@@ -68,6 +71,7 @@ const PictureWithBackgroundComponent: React.FC = () => {
                 handleClickFilterItem("Gebaeude B", "/gebaeude_b.png"),
         },
         {
+            id: uuid(),
             name: "HKA BIB",
             src: "/hka_bib.jpg",
             isActive: appContext.selectedFilterItem?.name === "HKA BIB",

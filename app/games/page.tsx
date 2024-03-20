@@ -4,24 +4,14 @@
 import React from "react";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
 import { SelectablePageItem } from "@/context/ApplicationContext";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import GamepadIcon from "@mui/icons-material/Gamepad";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import AppsIcon from "@mui/icons-material/Apps";
-import { useRouter } from "next/navigation";
 import SelectableItemListComponent from "@/components/shared/SelectableItemListComponent";
 import { SxProps } from "@mui/joy/styles/types";
 
 const GamePage: React.FC = () => {
-    const router = useRouter();
-
     const selectableItems: SelectablePageItem[] = [
-        {
-            label: "Foto mit Hintergrund",
-            // @ts-expect-error
-            icon: <AddPhotoAlternateIcon fontSize="inherit" sx={IconStyle} />,
-            onClick: () => router.push("/games/picture_with_bg"),
-        },
         {
             label: "Packman",
             // @ts-expect-error

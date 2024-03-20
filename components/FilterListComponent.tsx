@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 type PropsFilterList = {
     filterItems: FilterItem[];
-    selectedFilterItem: FilterItem;
+    selectedFilterItem: FilterItem | undefined;
 };
 export const FilterListComponent: React.FC<PropsFilterList> = (
     props: PropsFilterList,
@@ -35,7 +35,7 @@ export const FilterListComponent: React.FC<PropsFilterList> = (
                         size="lg"
                         sx={{
                             border:
-                                f.name === selectedFilterItem.name
+                                f.name === selectedFilterItem?.name
                                     ? "1px solid var(--color-primary)"
                                     : "1px solid var(--color-white)",
                             borderRadius: "30%",
@@ -48,7 +48,7 @@ export const FilterListComponent: React.FC<PropsFilterList> = (
                         sx={{
                             color: "var(--color-white)",
                             backgroundColor:
-                                f.name === selectedFilterItem.name
+                                f.name === selectedFilterItem?.name
                                     ? "var(--color-primary)"
                                     : "unset",
                             p: "var(--space-1)",

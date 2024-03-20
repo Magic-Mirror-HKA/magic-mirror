@@ -37,10 +37,10 @@ export type AnimationFilterName =
     | "Wolke";
 
 export type BackgroundFilterName =
-    | "Eingang"
-    | "HKA BIB"
-    | "Gebaeude B"
-    | "HKA R Gebaeude";
+    | "Pyramide"
+    | "Schloss"
+    | "Formeln"
+    | "Saal";
 
 type BaseAttributeFilterItem = {
     id: string;
@@ -66,6 +66,11 @@ export type CameraToolbarButton = {
     disabled?: boolean;
     onClick: () => void;
 };
+
+export type ImageTyp = {
+    id: string;
+    source: string;
+}
 
 export const CAMERA_FRAME_MAX_WIDTH = 700;
 export const CAMERA_FRAME_MAX_HEIGHT = 400;
@@ -113,15 +118,15 @@ type Output = {
 
     // Filter
     filterItems: FilterItem[];
-    selectedFilterItem: FilterItem;
+    selectedFilterItem: FilterItem | undefined;
     setFilterItems: (items: FilterItem[]) => void;
     setSelectedFilterItem: (item?: FilterItem | undefined) => void;
     clearFilterItems: () => void;
 
     // Images captured from Camera component
-    images: string[];
-    addImage: (image: string) => void;
-    removeImage: (image: string) => void;
+    images: ImageTyp[];
+    addImage: (image: ImageTyp) => void;
+    removeImage: (id: string) => void;
     clearImages: () => void;
 };
 
@@ -161,18 +166,18 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     );
 
     // Images captured from Camera component
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<ImageTyp[]>([]);
 
     const clearFilterItems = () => {
         setFilterItems([]);
     };
 
-    const addImage = (image: string) => {
+    const addImage = (image: ImageTyp) => {
         setImages((prevState) => [...prevState, image]);
     };
 
-    const removeImage = (image: string) => {
-        setImages((prevState) => prevState.filter((i) => i !== image));
+    const removeImage = (id: string) => {
+        setImages((prevState) => prevState.filter((i) => i.id !== id));
     };
 
     const clearImages = () => {
@@ -185,7 +190,7 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
                 webcamInstance: webcamInstance,
                 setWebcamInstance,
                 filterItems,
-                selectedFilterItem: selectedFilterItem!,
+                selectedFilterItem: selectedFilterItem,
                 setFilterItems,
                 setSelectedFilterItem: setSelectedFilterItem,
                 clearFilterItems,

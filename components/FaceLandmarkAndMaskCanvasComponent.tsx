@@ -194,7 +194,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                                 //height={videoSize.height}
                                 height={parentSize.height}
                                 ThreeDModel={
-                                    appContext.selectedFilterItem.threeDModel!
+                                    appContext.selectedFilterItem?.threeDModel!
                                 }
                             />
                         ) : (

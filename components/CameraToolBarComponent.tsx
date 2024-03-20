@@ -4,6 +4,7 @@ import Avatar from "@mui/joy/Avatar";
 import {
     CAMERA_FRAME_MAX_WIDTH,
     CameraToolbarButton,
+    ImageTyp,
 } from "@/context/ApplicationContext";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 import styled from "styled-components";
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 type Props = {
     buttons: CameraToolbarButton[];
-    images: string[];
+    images: ImageTyp[];
 };
 export const CameraToolBarComponent: React.FC<Props> = (props: Props) => {
     const fullScreenContext = useFullScreenContext();
@@ -34,7 +35,7 @@ export const CameraToolBarComponent: React.FC<Props> = (props: Props) => {
                     }}
                 >
                     <Avatar
-                        src={images[images.length - 1]}
+                        src={images[images.length - 1].source}
                         sx={{
                             borderRadius: "var(--space-2)",
                             "--Avatar-size": "var(--space-12)",

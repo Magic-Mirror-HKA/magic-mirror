@@ -50,8 +50,8 @@ export const useSelfieSegmentation = (input: Input) => {
 
         return () => {
             // Destroys previous camera and segmentation instances to prevent memory leaks
-            void camera.stop();
-            void selfieSegmentation.close();
+            void camera?.stop();
+            void selfieSegmentation?.close();
         };
     }, [backgroundImage, videoElement, outputCanvasElement]);
 

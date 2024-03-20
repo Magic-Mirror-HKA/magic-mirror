@@ -62,7 +62,7 @@ export const ImageListComponent: React.FC = () => {
                 ) : null}
                 {images.map((image) => (
                     <Badge
-                        key={image}
+                        key={image.id}
                         badgeContent={<DeleteIcon sx={{ my: 1, mx: 0.3 }} />}
                         invisible={!toggleDeleteSelection}
                         color="danger"
@@ -70,14 +70,14 @@ export const ImageListComponent: React.FC = () => {
                             toggleDeleteSelection ? "vibration" : undefined
                         }
                         {...(toggleDeleteSelection && {
-                            onClick: () => removeImage(image),
+                            onClick: () => removeImage(image.id),
                         })}
                         sx={{
                             "--Badge-ringSize": "3px",
                         }}
                     >
                         <Avatar
-                            src={image}
+                            src={image.source}
                             className={
                                 toggleDeleteSelection ? "vibration" : undefined
                             }

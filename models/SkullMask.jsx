@@ -31,10 +31,6 @@ export const SkullMask = (props) => {
     }
   });
 
-  useEffect(() => {
-    console.log(refSkullHead.current);
-  }, []);
-
   const updateTranslation = (results, flipped = true) => {
     if (!results.facialTransformationMatrixes) return;
 
@@ -61,13 +57,6 @@ export const SkullMask = (props) => {
       (translation.x - 2) * 0.05,
       (translation.y + 0.5) * -0.2,
       (translation.z + 20) * 0.03,
-    );
-
-    console.log(
-      " x, y, z -> ",
-      translation.x * 0.05,
-      translation.y * -0.2,
-      translation.z * 0.03
     );
 
     // refSkullHead.current.scale.set(3, 3, 3);

@@ -30,7 +30,7 @@ import { LoadingComponent } from "@/components/shared/LoadingComponent";
 import { FilterListComponent } from "@/components/FilterListComponent";
 import { CameraToolBarComponent } from "@/components/CameraToolBarComponent";
 import { OUTPUT_CANVAS_ID } from "@/components/shared/CanvasComponent";
-//import FaceLandMarkerComponent from "@/components/filters/FaceLandMarkerComponent";
+import { v4 as uuid } from "uuid";
 
 const FaceLandmarkAndMaskCanvasComponent = dynamic(
     () => {
@@ -42,7 +42,7 @@ const FaceLandmarkAndMaskCanvasComponent = dynamic(
 type Props = {
     showFilters?: boolean;
     showCustomBackground?: boolean;
-    outputCanvas?: ReactNode;
+    outputCanvas?: ReactNode | undefined;
 };
 
 const CameraComponent = forwardRef(
@@ -66,14 +66,25 @@ const CameraComponent = forwardRef(
                 ref as MutableRefObject<Webcam>
             ).current?.getScreenshot()!;
 
-            if (showFilters || showCustomBackground) {
+            if (outputCanvas !== undefined) {
                 const canvas = document.getElementById(
                     OUTPUT_CANVAS_ID,
                 ) as HTMLCanvasElement;
                 imageSrc = canvas.toDataURL();
             }
 
-            appContext.addImage(imageSrc);
+            if (showFilters) {
+                // const canvas = document.querySelector(
+                //   `canvas[data-engine="three.js r160"]`,
+                // ) as HTMLCanvasElement;
+                // console.log(canvas);
+                // imageSrc = canvas.toDataURL();
+
+                alert("Das Aufnehmen mit 3D-Modellen wird noch entwickelt");
+                return;
+            }
+
+            appContext.addImage({ id: uuid(), source: imageSrc });
         };
 
         const playScreenshotAnimation = () => {
@@ -116,10 +127,12 @@ const CameraComponent = forwardRef(
             fullScreenContext.goFullScreen();
         };
 
-        const getCameraFrameStyle = (
-            parentSize: ContainerSize,
-        ): CSSProperties => {
+        const getWebcamStyle = (parentSize: ContainerSize): CSSProperties => {
             return {
+                display:
+                    showFilters || outputCanvas !== undefined
+                        ? "none"
+                        : "block",
                 objectFit: "cover",
                 borderRadius: "var(--space-5)",
                 height: fullScreenContext.isFullScreen
@@ -160,16 +173,9 @@ const CameraComponent = forwardRef(
                                         onUserMedia={() =>
                                             setIsCameraLoading(false)
                                         }
-                                        style={{
-                                            display:
-                                                showFilters ||
-                                                showCustomBackground
-                                                    ? "none"
-                                                    : "block",
-                                            ...getCameraFrameStyle(parentSize),
-                                        }}
+                                        style={getWebcamStyle(parentSize)}
                                     />
-                                    {outputCanvas}
+                                    {outputCanvas && outputCanvas}
                                     {showFilters ? (
                                         // <FaceLandMarkerComponent
                                         //     webcamRef={webcamRefAsState}

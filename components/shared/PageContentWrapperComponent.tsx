@@ -27,10 +27,15 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
 
     const pageHeaderTitleStyles: SxProps = {
         color: fullScreenContext.isFullScreen ? "var(--color-white)" : "unset",
-        //textShadow: "var(--color-white) 1px 0 1px",
+        filter: fullScreenContext.isFullScreen
+            ? "drop-shadow(0px 6px 6px rgba(0,0,0,0.6000000238418579))"
+            : "unset",
     };
 
     const pageHeaderButtonsStyles: SxProps = {
+        filter: fullScreenContext.isFullScreen
+            ? "drop-shadow(0px 6px 6px rgba(0,0,0,0.6000000238418579))"
+            : "unset",
         color: fullScreenContext.isFullScreen
             ? "var(--color-white)"
             : "var(--color-primary)",

@@ -225,7 +225,8 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     max-height: ${(props) =>
         props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
     width: 100%;
-    height: 100%;
+    height: ${(props) =>
+        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
     border-radius: var(--space-5);
     position: ${(props) => (props.isFullScreen ? "absolute" : "relative")};
     bottom: ${(props) => (props.isFullScreen ? 0 : "unset")};

@@ -43,6 +43,7 @@ const ResizeToParentSizeComponent: React.FC<Props> = (props: Props) => {
 };
 
 const ParentWrapperContainer = styled(Box)(() => ({
+    position: "absolute",
     width: "100%",
     height: "100%",
 }));

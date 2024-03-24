@@ -37,28 +37,30 @@ export type AnimationFilterName =
     | "Wolke";
 
 export type BackgroundFilterName =
-    | "Pyramide"
-    | "Schloss"
-    | "Formeln"
-    | "Saal";
+    | "Schloss 1"
+    | "Schloss 2"
+    | "Schloss 3"
+    | "Schloss 4"
+    | "Schloss 5"
+    | "Schloss 6"
+    | "Schloss 7"
+    | "Schloss 8"
+    | "Schloss 9"
+    | "Schloss 10"
+    | "Schloss 11"
+    | "Schloss 12"
+;
 
-type BaseAttributeFilterItem = {
+export type FilterItem<T extends string> = {
     id: string;
     src: string;
+    name: T;
     isActive: boolean;
     threeDModel?:
         | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
         | undefined;
     onClick?: () => void;
 };
-
-export type FilterItem =
-    | (BaseAttributeFilterItem & {
-          name: AnimationFilterName;
-      })
-    | (BaseAttributeFilterItem & {
-          name: BackgroundFilterName;
-      });
 
 export type CameraToolbarButton = {
     icon: ComponentType<SvgIconOwnProps>;
@@ -117,10 +119,10 @@ type Output = {
     setWebcamInstance: (webcamInstance: Webcam) => void;
 
     // Filter
-    filterItems: FilterItem[];
-    selectedFilterItem: FilterItem | undefined;
-    setFilterItems: (items: FilterItem[]) => void;
-    setSelectedFilterItem: (item?: FilterItem | undefined) => void;
+    filterItems: FilterItem<string>[];
+    selectedFilterItem: FilterItem<string> | undefined;
+    setFilterItems: (items: FilterItem<string>[]) => void;
+    setSelectedFilterItem: (item?: FilterItem<string> | undefined) => void;
     clearFilterItems: () => void;
 
     // Images captured from Camera component
@@ -157,9 +159,9 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     const { children } = props;
 
     // Filter
-    const [filterItems, setFilterItems] = useState<FilterItem[]>([]);
+    const [filterItems, setFilterItems] = useState<FilterItem<string>[]>([]);
     const [selectedFilterItem, setSelectedFilterItem] = useState<
-        FilterItem | undefined
+        FilterItem<string> | undefined
     >(undefined);
     const [webcamInstance, setWebcamInstance] = useState<Webcam | undefined>(
         undefined,

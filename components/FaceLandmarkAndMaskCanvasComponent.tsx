@@ -71,7 +71,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         />
     );
 
-    const filterItems: FilterItem[] = [
+    const filterItems: FilterItem<AnimationFilterName>[] = [
         {
             id: uuid(),
             name: "Matrix",

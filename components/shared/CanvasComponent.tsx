@@ -20,7 +20,7 @@ export const CanvasComponent = forwardRef(
                 style={{
                     width,
                     height,
-                    objectFit: "cover",
+                    objectFit: "contain",
                     borderRadius: "var(--space-5)",
                 }}
             />

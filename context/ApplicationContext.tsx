@@ -37,6 +37,8 @@ export type AnimationFilterName =
     | "Wolke";
 
 export type BackgroundFilterName =
+    | "Strand"
+    | "Formeln"
     | "Schloss 1"
     | "Schloss 2"
     | "Schloss 3"
@@ -44,12 +46,7 @@ export type BackgroundFilterName =
     | "Schloss 5"
     | "Schloss 6"
     | "Schloss 7"
-    | "Schloss 8"
-    | "Schloss 9"
-    | "Schloss 10"
-    | "Schloss 11"
-    | "Schloss 12"
-;
+    | "Schloss 8";
 
 export type FilterItem<T extends string> = {
     id: string;
@@ -72,7 +69,7 @@ export type CameraToolbarButton = {
 export type ImageTyp = {
     id: string;
     source: string;
-}
+};
 
 export const CAMERA_FRAME_MAX_WIDTH = 700;
 export const CAMERA_FRAME_MAX_HEIGHT = 400;

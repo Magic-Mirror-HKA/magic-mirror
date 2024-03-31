@@ -203,3 +203,32 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
         </AppContext.Provider>
     );
 };
+
+export const combineCanvases = (
+    canvas1: HTMLCanvasElement,
+    canvas2: HTMLCanvasElement,
+): HTMLCanvasElement => {
+    // if (canvas1.width !== canvas2.width || canvas1.height !== canvas2.height) {
+    //     throw new Error("Canvases must have the same size.");
+    // }
+
+    const ctx1 = canvas1.getContext("2d");
+    const ctx2 = canvas2.getContext("2d");
+
+    const combinedCanvas = document.createElement("canvas");
+    combinedCanvas.width = canvas1.width;
+    combinedCanvas.height = canvas1.height;
+
+    const ctxCombined = combinedCanvas.getContext("2d");
+
+    if (!ctx1 && !ctx2 && !ctxCombined) {
+        throw new Error("Could not get 2D Context of canvases");
+    }
+
+    ctxCombined!.drawImage(canvas1, 0, 0);
+    ctxCombined!.drawImage(canvas2, 0, 0);
+
+    ctxCombined!.save();
+
+    return combinedCanvas;
+};

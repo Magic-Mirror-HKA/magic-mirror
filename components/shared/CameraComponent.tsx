@@ -22,6 +22,7 @@ import {
     CAMERA_FRAME_MAX_HEIGHT,
     CAMERA_FRAME_MAX_WIDTH,
     CameraToolbarButton,
+    combineCanvases,
     ContainerSize,
     useAppContext,
 } from "@/context/ApplicationContext";
@@ -29,7 +30,10 @@ import dynamic from "next/dynamic";
 import { LoadingComponent } from "@/components/shared/LoadingComponent";
 import { FilterListComponent } from "@/components/FilterListComponent";
 import { CameraToolBarComponent } from "@/components/CameraToolBarComponent";
-import { OUTPUT_CANVAS_ID } from "@/components/shared/CanvasComponent";
+import {
+    OUTPUT_BACKGROUND_CANVAS_ID,
+    OUTPUT_CANVAS_ID,
+} from "@/components/shared/CanvasComponent";
 import { v4 as uuid } from "uuid";
 
 const FaceLandmarkAndMaskCanvasComponent = dynamic(
@@ -66,11 +70,21 @@ const CameraComponent = forwardRef(
                 ref as MutableRefObject<Webcam>
             ).current?.getScreenshot()!;
 
-            if (outputCanvas !== undefined) {
-                const canvas = document.getElementById(
+            if (showCustomBackground) {
+                const outputCanvas = document.getElementById(
                     OUTPUT_CANVAS_ID,
                 ) as HTMLCanvasElement;
-                imageSrc = canvas.toDataURL();
+
+                const backgroundCanvas = document.getElementById(
+                    OUTPUT_BACKGROUND_CANVAS_ID,
+                ) as HTMLCanvasElement;
+
+                const combinedCanvas = combineCanvases(
+                    backgroundCanvas,
+                    outputCanvas,
+                );
+
+                imageSrc = combinedCanvas.toDataURL();
             }
 
             if (showFilters) {

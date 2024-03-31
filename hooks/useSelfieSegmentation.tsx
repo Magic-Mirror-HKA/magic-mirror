@@ -17,6 +17,7 @@ import "@tensorflow/tfjs-backend-webgl";
 
 // Uncomment the line below if you want to use TensorFlow.js runtime.
 import "@tensorflow/tfjs-converter";
+import { OUTPUT_BACKGROUND_CANVAS_ID } from "@/components/shared/CanvasComponent";
 // Uncomment the line below if you want to use MediaPipe runtime.
 // import '@mediapipe/selfie_segmentation';
 
@@ -402,7 +403,6 @@ type Input = {
 //     }, [backgroundImage, videoElement, outputCanvasElement]);
 // }
 
-
 const FRAME_WIDTH = 3260;
 const FRAME_HEIGHT = 2500;
 export const useSelfieSegmentation = (input: Input) => {
@@ -458,54 +458,6 @@ export const useSelfieSegmentation = (input: Input) => {
         const camera = videoElement;
         const canvas = outputCanvasElement;
 
-        if (!camera || !canvas) {
-            console.error(
-                "Could not find either an instance of a camera nor an instance of the output canvas",
-            );
-            return;
-        }
-
-        const canvasCtx = canvas.getContext("2d");
-
-        // Flip the canvas 180 degree on the horizontally
-        canvas.style.transform = "scaleX(-1)";
-
-        if (!canvasCtx) {
-            console.error("No Canvas context");
-            return;
-        }
-
-        //canvasCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-        canvas.width = FRAME_WIDTH;
-        canvas.height = FRAME_HEIGHT;
-
-        canvasCtx.save();
-        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasCtx.filter = "none";
-        canvasCtx.drawImage(
-            results.segmentationMask,
-            0,
-            0,
-            canvas.width,
-            canvas.height,
-        );
-
-        canvasCtx.globalCompositeOperation = "source-in";
-        canvasCtx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
-
-        canvasCtx.globalCompositeOperation = "destination-atop";
-        // canvasCtx.filter = "blur(10px)";
-        //backgroundImage.style.objectFit = "contain";
-        //backgroundImage.width = 640;
-        //backgroundImage.height = 480;
-        canvasCtx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-
-        canvasCtx.restore();
-
-        // const camera = videoElement;
-        // const canvas = outputCanvasElement;
-        //
         // if (!camera || !canvas) {
         //     console.error(
         //         "Could not find either an instance of a camera nor an instance of the output canvas",
@@ -515,88 +467,143 @@ export const useSelfieSegmentation = (input: Input) => {
         //
         // const canvasCtx = canvas.getContext("2d");
         //
+        // // Flip the canvas 180 degree on the horizontally
+        // canvas.style.transform = "scaleX(-1)";
+        //
         // if (!canvasCtx) {
         //     console.error("No Canvas context");
         //     return;
         // }
         //
-        // // Resize the canvas to match the video size
+        // //canvasCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        //
         // canvas.width = FRAME_WIDTH;
         // canvas.height = FRAME_HEIGHT;
         //
-        // // Rotate the canvas 180 degree on the y-axis
-        // canvas.style.transform = "scaleX(-1)";
-        //
-        // // Draw the custom background first
-        // backgroundImage.width = FRAME_WIDTH;
-        // backgroundImage.height = FRAME_HEIGHT;
-        // backgroundImage.style.objectFit = "contain";
+        // canvasCtx.save();
+        // canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        // canvasCtx.filter = "none";
         // canvasCtx.drawImage(
-        //     backgroundImage,
-        //     0,
-        //     0,
-        //     backgroundImage.width,
-        //     backgroundImage.height,
-        // );
-        //
-        // // Initialize the tempCanvas and maskCanvas only once
-        // const tempCanvas = document.createElement("canvas");
-        // tempCanvas.width = canvas.width;
-        // tempCanvas.height = canvas.height;
-        // const tempCtx = tempCanvas.getContext("2d")!;
-        //
-        // const maskCanvas = document.createElement("canvas");
-        // maskCanvas.width = canvas.width;
-        // maskCanvas.height = canvas.height;
-        // const maskCtx = maskCanvas.getContext("2d")!;
-        //
-        // // Draw the person onto the tempCanvas
-        // tempCtx.drawImage(
-        //     results.image,
-        //     0,
-        //     0,
-        //     tempCanvas.width,
-        //     tempCanvas.height,
-        // );
-        //
-        // maskCtx.drawImage(
         //     results.segmentationMask,
         //     0,
         //     0,
-        //     maskCanvas.width,
-        //     maskCanvas.height,
+        //     canvas.width,
+        //     canvas.height,
         // );
         //
-        // const imageData = maskCtx.getImageData(
-        //     0,
-        //     0,
-        //     maskCanvas.width,
-        //     maskCanvas.height,
-        // );
+        // canvasCtx.globalCompositeOperation = "source-in";
+        // canvasCtx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
         //
-        // // Apply binary thresholding
-        // const threshold = 1; // Adjust the threshold value to your preference
-        // for (let i = 0; i < imageData.data.length; i += 4) {
-        //     const grayscale =
-        //         (imageData.data[i] +
-        //             imageData.data[i + 1] +
-        //             imageData.data[i + 2]) /
-        //         3;
-        //     const binaryValue = grayscale > threshold ? 255 : 0;
-        //     imageData.data[i] =
-        //         imageData.data[i + 1] =
-        //         imageData.data[i + 2] =
-        //             binaryValue;
-        // }
+        // canvasCtx.globalCompositeOperation = "destination-atop";
+        // // canvasCtx.filter = "blur(10px)";
+        // //backgroundImage.style.objectFit = "contain";
+        // //backgroundImage.width = 640;
+        // //backgroundImage.height = 480;
+        // canvasCtx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
         //
-        // maskCtx.putImageData(imageData, 0, 0);
-        //
-        // // Use globalCompositeOperation to create a masked version of the person
-        // tempCtx.globalCompositeOperation = "destination-in";
-        // tempCtx.drawImage(maskCanvas, 0, 0);
-        //
-        // // Reset globalCompositeOperation to draw the masked person onto the main canvas
-        // canvasCtx.globalCompositeOperation = "source-over";
-        // canvasCtx.drawImage(tempCanvas, 0, 0);
+        // canvasCtx.restore();
+
+        if (!camera || !canvas) {
+            console.error(
+                "Could not find either an instance of a camera nor an instance of the output canvas",
+            );
+            return;
+        }
+
+        const canvasCtx = canvas.getContext("2d");
+
+        if (!canvasCtx) {
+            console.error("No Canvas context");
+            return;
+        }
+
+        // Resize the canvas to match the video size
+        canvas.width = FRAME_WIDTH;
+        canvas.height = FRAME_HEIGHT;
+
+        // Rotate the canvas 180 degree on the y-axis
+        canvas.style.transform = "scaleX(-1)";
+
+        // Draw the custom background first
+        //backgroundImage.width = FRAME_WIDTH;
+        //backgroundImage.height = FRAME_HEIGHT;
+        backgroundImage.style.objectFit = "cover";
+
+        const backgroundCanvas = document.getElementById(
+            OUTPUT_BACKGROUND_CANVAS_ID,
+        ) as HTMLCanvasElement;
+
+        backgroundCanvas.width = backgroundImage.width;
+        backgroundCanvas.height = backgroundImage.height;
+
+        const backgroundCanvasCtx = backgroundCanvas.getContext("2d")!;
+
+        backgroundCanvasCtx.drawImage(
+            backgroundImage,
+            0,
+            0,
+            backgroundImage.width,
+            backgroundImage.height,
+        );
+
+        // Initialize the tempCanvas and maskCanvas only once
+        const tempCanvas = document.createElement("canvas");
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext("2d")!;
+
+        const maskCanvas = document.createElement("canvas");
+        maskCanvas.width = canvas.width;
+        maskCanvas.height = canvas.height;
+        const maskCtx = maskCanvas.getContext("2d")!;
+
+        // Draw the person onto the tempCanvas
+        tempCtx.drawImage(
+            results.image,
+            0,
+            0,
+            tempCanvas.width,
+            tempCanvas.height,
+        );
+
+        maskCtx.drawImage(
+            results.segmentationMask,
+            0,
+            0,
+            maskCanvas.width,
+            maskCanvas.height,
+        );
+
+        const imageData = maskCtx.getImageData(
+            0,
+            0,
+            maskCanvas.width,
+            maskCanvas.height,
+        );
+
+        // Apply binary thresholding
+        const threshold = 1; // Adjust the threshold value to your preference
+        for (let i = 0; i < imageData.data.length; i += 4) {
+            const grayscale =
+                (imageData.data[i] +
+                    imageData.data[i + 1] +
+                    imageData.data[i + 2]) /
+                3;
+            const binaryValue = grayscale > threshold ? 255 : 0;
+            imageData.data[i] =
+                imageData.data[i + 1] =
+                imageData.data[i + 2] =
+                    binaryValue;
+        }
+
+        maskCtx.putImageData(imageData, 0, 0);
+
+        // Use globalCompositeOperation to create a masked version of the person
+        tempCtx.globalCompositeOperation = "destination-in";
+        tempCtx.drawImage(maskCanvas, 0, 0);
+
+        // Reset globalCompositeOperation to draw the masked person onto the main canvas
+        canvasCtx.globalCompositeOperation = "source-over";
+        canvasCtx.drawImage(tempCanvas, 0, 0);
     };
 };

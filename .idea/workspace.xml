@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fa2d5a3f-5005-4860-b543-457e4539f947" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/TensorflowModelPositioning.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/useFacialTransformation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/textures/AnonymousMask.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/textures/GlassesMask.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/textures/TigerMask.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/glasses-black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jeeliz/faceFilter/JeelizThreeFiberHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jeeliz/faceFilter/JeelizThreeHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jeeliz/mesh/maskMesh.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/mask-image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/neuralNets/NN_4EXPR_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/neuralNets/NN_4EXPR_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/neuralNets/NN_DEFAULT.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/neuralNets/NN_LIGHT_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/neuralNets/NN_STANDARD_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sunglasses.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/tensorflow/faceMesh.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/tiger-image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ApplicationContainerComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ApplicationContainerComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/ApplicationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/ApplicationContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/AngelDemonFight.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/models/AngelDemonFight.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/SkullMask.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/models/SkullMask.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "fixing-masks-animations",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "C:\\Users\\ramse\\Documents\\projects\\hochshule\\magic-mirror\\new-project\\magic-mirror\\node_modules\\typescript\\lib"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added doudle canvas for backgrounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added doudle canvas for backgrounds" />
+  </component>
+</project>

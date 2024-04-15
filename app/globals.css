@@ -9,6 +9,8 @@ body {
     background: url("/body-bg.svg");
     background-size: cover;
     background-repeat: no-repeat;
+    display: grid;
+    height: 100vh;
 }
 
 :root {

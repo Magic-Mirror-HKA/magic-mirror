@@ -4,6 +4,8 @@ import React, { ComponentType, Suspense } from "react";
 import { Html, PerspectiveCamera } from "@react-three/drei";
 import { LoadingComponent } from "@/components/shared/LoadingComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
+import { TensorflowModelPositioning } from "@/hooks/TensorflowModelPositioning";
+import {ThreeModelType} from "@/context/ApplicationContext";
 
 /**
  * Tree Shaking the THREEjs library to prevent runtime error.
@@ -16,48 +18,14 @@ extend(THREE);
 interface PropsAvatarCanvas {
     width: number;
     height: number;
-    ThreeDModel: ComponentType<{ webcamInstance?: HTMLVideoElement }>;
+    ThreeModel: ThreeModelType;
     webcamInstance: HTMLVideoElement;
 }
 
 const AvatarCanvas = (props: PropsAvatarCanvas) => {
-    const { width, height, ThreeDModel, webcamInstance } = props;
+    const { width, height, ThreeModel, webcamInstance } = props;
 
     const { isFullScreen } = useFullScreenContext();
-
-    // const appContext = useAppContext();
-
-    // const [isLoading, setIsLoading] = useState<boolean>(true);
-    // const avatarManagerRef = useRef<AvatarManager>(AvatarManager.getInstance());
-    // const requestRef = useRef<number>(0);
-
-    // const animate = () => {
-    //     const results = FaceLandmarkManager.getInstance().getResults();
-    //     avatarManagerRef.current.updateFacialTransforms(results, true);
-    //     requestRef.current = requestAnimationFrame(animate);
-    // };
-    //
-    // useEffect(() => {
-    //     requestRef.current = requestAnimationFrame(animate);
-    //     return () => {
-    //         cancelAnimationFrame(requestRef.current);
-    //         avatarManagerRef.current.clearScene();
-    //     };
-    // }, []);
-
-    // useEffect(() => {
-    //     setIsLoading(true);
-    //     const avatarManager = AvatarManager.getInstance();
-    //     avatarManager
-    //         .loadModel(url)
-    //         .then(() => {
-    //             setScene(avatarManagerRef.current.getScene());
-    //             setIsLoading(false);
-    //         })
-    //         .catch((e) => {
-    //             alert(e);
-    //         });
-    // }, [url]);
 
     return (
         <div
@@ -65,13 +33,12 @@ const AvatarCanvas = (props: PropsAvatarCanvas) => {
             id="canvas-wrapper"
         >
             <Canvas
-                // gl={{ preserveDrawingBuffer: true }}
-                // camera={{ fov: 20, position: [0, 0.5, 1] }}
                 style={{ borderRadius: "var(--space-5)", width, height }}
             >
                 <PerspectiveCamera />
                 <ambientLight />
                 <directionalLight />
+                <hemisphereLight />
                 {/*<OrbitControls*/}
                 {/*// target={[0, 0.65, 0]}*/}
                 {/*// enableDamping={false}*/}
@@ -97,22 +64,8 @@ const AvatarCanvas = (props: PropsAvatarCanvas) => {
                         </Html>
                     }
                 >
-                    <ThreeDModel webcamInstance={webcamInstance} />
+                    <TensorflowModelPositioning video={webcamInstance} ThreeModel={ThreeModel} />
                 </Suspense>
-                {/*{isLoading ? (*/}
-                {/*    <Float floatIntensity={2} speed={2}>*/}
-                {/*        <Text3D*/}
-                {/*            font={"/assets/fonts/Open_Sans_Condensed_Bold.json"}*/}
-                {/*            scale={0.04}*/}
-                {/*            position={[-0.2, 0.6, 0]}*/}
-                {/*            bevelEnabled*/}
-                {/*            bevelSize={0.05}*/}
-                {/*        >*/}
-                {/*            Filter wird geladen...*/}
-                {/*            <meshNormalMaterial />*/}
-                {/*        </Text3D>*/}
-                {/*    </Float>*/}
-                {/*) : null}*/}
             </Canvas>
         </div>
     );

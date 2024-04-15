@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     AnimationFilterName,
     CAMERA_FRAME_MAX_HEIGHT,
@@ -9,19 +9,17 @@ import {
     useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
-import { Box } from "@mui/joy";
+import {Box} from "@mui/joy";
 import WebcamComponent from "@/components/shared/WebcamComponent";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
-import { useFullScreenContext } from "@/context/FullScreenContext";
+import {useFullScreenContext} from "@/context/FullScreenContext";
 import FaceLandmarkManager from "@/manager/FaceLandmarkManager";
 import Webcam from "react-webcam";
 import AvatarCanvas from "@/components/shared/AvatarCanvas";
-import DrawLandmarkCanvas from "@/components/DrawLandmarkCanvas";
-import { v4 as uuid } from "uuid";
-import { AngelDemonFight } from "@/models/AngelDemonFight";
-import { SkullMask } from "@/models/SkullMask";
-import { TigerHead } from "@/models/TigerHead";
-import { AlertMessageOnCameraComponent } from "@/components/shared/AlertMessageOnCameraComponent";
+import {v4 as uuid} from "uuid";
+import {AlertMessageOnCameraComponent} from "@/components/shared/AlertMessageOnCameraComponent";
+import AnonymousMask from "@/models/textures/AnonymousMask";
+import TigerMask from "@/models/textures/TigerMask";
 
 type Props = {
     parentSize: ContainerSize;
@@ -39,16 +37,8 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         undefined,
     );
 
-    // const toggleAvatarView = () => setFilterView((prev) => !prev);
-    // const toggleAvatarCreatorView = () => setShowAvatarCreator((prev) => !prev);
-    // const handleAvatarCreationComplete = (url: string) => {
-    //     setModelUrl(url);
-    //     toggleAvatarCreatorView();
-    // };
-
     const handleClickFilterItem = (itemName: AnimationFilterName) => {
         // TODO: CHANGE MASK HIER
-        //setModelUrl(itemName);
         appContext.setSelectedFilterItem(
             filterItems.find((f) => f.name === itemName),
         );
@@ -58,7 +48,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         appContext.setFilterItems(filterItems);
         // Initial selected filter
         appContext.setSelectedFilterItem(
-            filterItems.find((f) => f.name === "Totenkopf"),
+            filterItems.find((f) => f.name === "Anonym"),
         );
     }, []);
 
@@ -76,7 +66,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             id: uuid(),
             name: "Matrix",
             src: "/matrix.png",
-            threeDModel: inDevelopmentAlertMessageComponent,
+            threeModel: inDevelopmentAlertMessageComponent,
             isActive: appContext.selectedFilterItem?.name === "Matrix",
             onClick: () => handleClickFilterItem("Matrix"),
         },
@@ -84,23 +74,23 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             id: uuid(),
             name: "Engel & Teufel",
             src: "/angel-and-demon.png",
-            threeDModel: AngelDemonFight,
+            threeModel: inDevelopmentAlertMessageComponent,
             isActive: appContext.selectedFilterItem?.name === "Engel & Teufel",
             onClick: () => handleClickFilterItem("Engel & Teufel"),
         },
         {
             id: uuid(),
-            name: "Totenkopf",
-            src: "/skull_mask_placeholder.png",
-            threeDModel: SkullMask,
-            isActive: appContext.selectedFilterItem?.name === "Totenkopf",
-            onClick: () => handleClickFilterItem("Totenkopf"),
+            name: "Anonym",
+            src: "/mask.png",
+            threeModel: AnonymousMask,
+            isActive: appContext.selectedFilterItem?.name === "Anonym",
+            onClick: () => handleClickFilterItem("Anonym"),
         },
         {
             id: uuid(),
             name: "Tiger",
             src: "/tiger.png",
-            threeDModel: TigerHead,
+            threeModel: TigerMask,
             isActive: appContext.selectedFilterItem?.name === "Tiger",
             onClick: () => handleClickFilterItem("Tiger"),
         },
@@ -108,7 +98,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             id: uuid(),
             name: "Wolke",
             src: "/cloud_thunder.png",
-            threeDModel: inDevelopmentAlertMessageComponent,
+            threeModel: inDevelopmentAlertMessageComponent,
             isActive: appContext.selectedFilterItem?.name === "Wolke",
             onClick: () => handleClickFilterItem("Wolke"),
         },
@@ -193,20 +183,20 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                                 width={parentSize.width}
                                 //height={videoSize.height}
                                 height={parentSize.height}
-                                ThreeDModel={
-                                    appContext.selectedFilterItem?.threeDModel!
+                                ThreeModel={
+                                    appContext.selectedFilterItem?.threeModel!
                                 }
                             />
-                        ) : (
-                            <DrawLandmarkCanvas
-                                videoElement={
-                                    (videoRef.current as Webcam)
-                                        .video as HTMLVideoElement
-                                }
-                                width={videoSize.width}
-                                height={videoSize.height}
-                            />
-                        )}
+                        ) : null
+                            // <DrawLandmarkCanvas
+                            //     videoElement={
+                            //         (videoRef.current as Webcam)
+                            //             .video as HTMLVideoElement
+                            //     }
+                            //     width={videoSize.width}
+                            //     height={videoSize.height}
+                            // />
+                        }
                     </>
                 ) : null}
             </div>
@@ -220,9 +210,9 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     justify-items: center;
     background-color: var(--color-black);
     max-width: ${(props) =>
-        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
+            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
     max-height: ${(props) =>
-        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
+            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
     width: 100%;
     height: 100%;
     border-radius: var(--space-5);

@@ -5,17 +5,20 @@ import React, {
     ComponentType,
     createContext,
     FC,
+    ForwardRefExoticComponent,
     PropsWithChildren,
     ReactNode,
+    RefAttributes,
     useContext,
     useEffect,
     useState,
 } from "react";
 import * as THREE from "three";
+import {BufferGeometry, Mesh, NormalBufferAttributes} from "three";
 
 // @ts-expect-error
-import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { SvgIconOwnProps } from "@mui/material";
+import {GLTF, GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+import {SvgIconOwnProps} from "@mui/material";
 import Webcam from "react-webcam";
 
 export type SelectablePageItem = {
@@ -32,7 +35,7 @@ export type ContainerSize = {
 export type AnimationFilterName =
     | "Matrix"
     | "Engel & Teufel"
-    | "Totenkopf"
+    | "Anonym"
     | "Tiger"
     | "Wolke";
 
@@ -48,14 +51,17 @@ export type BackgroundFilterName =
     | "Schloss 7"
     | "Schloss 8";
 
+export type ThreeModelType =
+    | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
+    | ForwardRefExoticComponent<PropsMaskModel & RefAttributes<MeshType>>
+    | undefined;
+
 export type FilterItem<T extends string> = {
     id: string;
     src: string;
     name: T;
     isActive: boolean;
-    threeDModel?:
-        | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
-        | undefined;
+    threeModel?: ThreeModelType;
     onClick?: () => void;
 };
 
@@ -73,6 +79,14 @@ export type ImageTyp = {
 
 export const CAMERA_FRAME_MAX_WIDTH = 700;
 export const CAMERA_FRAME_MAX_HEIGHT = 400;
+
+export type MeshType = Mesh<BufferGeometry<NormalBufferAttributes>>;
+
+export type MaskPosition = "HEAD" | "BOTH-EYES" | "NOSE" | "MOUTH" | "CHIN" | "WHOLE-FACE";
+
+export type PropsMaskModel = {
+    setPosition: (position: MaskPosition) => void;
+}
 
 export const decomposeMatrix = (
     matrix1d: number[],

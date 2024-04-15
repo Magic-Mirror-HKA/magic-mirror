@@ -1,11 +1,11 @@
 import * as THREE from "three";
 import { Canvas, extend } from "@react-three/fiber";
-import React, { ComponentType, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Html, PerspectiveCamera } from "@react-three/drei";
 import { LoadingComponent } from "@/components/shared/LoadingComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 import { TensorflowModelPositioning } from "@/hooks/TensorflowModelPositioning";
-import {ThreeModelType} from "@/context/ApplicationContext";
+import { ThreeModelType } from "@/context/ApplicationContext";
 
 /**
  * Tree Shaking the THREEjs library to prevent runtime error.
@@ -32,9 +32,7 @@ const AvatarCanvas = (props: PropsAvatarCanvas) => {
             style={{ position: "absolute", width, height }}
             id="canvas-wrapper"
         >
-            <Canvas
-                style={{ borderRadius: "var(--space-5)", width, height }}
-            >
+            <Canvas style={{ borderRadius: "var(--space-5)", width, height }}>
                 <PerspectiveCamera />
                 <ambientLight />
                 <directionalLight />
@@ -64,7 +62,10 @@ const AvatarCanvas = (props: PropsAvatarCanvas) => {
                         </Html>
                     }
                 >
-                    <TensorflowModelPositioning video={webcamInstance} ThreeModel={ThreeModel} />
+                    <TensorflowModelPositioning
+                        video={webcamInstance}
+                        ThreeModel={ThreeModel}
+                    />
                 </Suspense>
             </Canvas>
         </div>

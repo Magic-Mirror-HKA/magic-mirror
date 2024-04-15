@@ -54,14 +54,14 @@ export type BackgroundFilterName =
 export type ThreeModelType =
     | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
     | ForwardRefExoticComponent<PropsMaskModel & RefAttributes<MeshType>>
-    | undefined;
+    ;
 
 export type FilterItem<T extends string> = {
     id: string;
     src: string;
     name: T;
     isActive: boolean;
-    threeModel?: ThreeModelType;
+    threeModel?: ThreeModelType | undefined;
     onClick?: () => void;
 };
 

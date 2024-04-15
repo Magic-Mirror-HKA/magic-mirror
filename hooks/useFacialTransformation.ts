@@ -22,6 +22,7 @@ export const useFacialTransformation = (): Output => {
 
     useEffect(() => {
         const loadModel = async () => {
+            // @ts-ignore
             return await facemesh.load({
                 maxContinuousChecks: 5,
                 detectionConfidence: 0.9,
@@ -44,6 +45,7 @@ export const useFacialTransformation = (): Output => {
         
         if (!model) return;
         
+        // @ts-ignore
         const predictions = await model.estimateFaces(videoElement);
 
         console.log("predictions: ", predictions);

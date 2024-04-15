@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {Ref, useEffect, useRef, useState} from "react";
 import * as THREE from "three";
 import * as faceMesh from "../public/tensorflow/faceMesh";
 import {extend, useFrame} from '@react-three/fiber';
@@ -76,7 +76,10 @@ export const TensorflowModelPositioning: React.FC<PropsTensorflowModelPositionin
     });
 
     return (
-        <ThreeModel ref={maskRef} setPosition={setMaskPosition} />
+        <ThreeModel
+            ref={maskRef as Ref<MeshType>}
+            setPosition={setMaskPosition}
+        />
     );
 }
 

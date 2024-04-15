@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     AnimationFilterName,
     CAMERA_FRAME_MAX_HEIGHT,
@@ -9,15 +9,15 @@ import {
     useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
-import {Box} from "@mui/joy";
+import { Box } from "@mui/joy";
 import WebcamComponent from "@/components/shared/WebcamComponent";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
-import {useFullScreenContext} from "@/context/FullScreenContext";
+import { useFullScreenContext } from "@/context/FullScreenContext";
 import FaceLandmarkManager from "@/manager/FaceLandmarkManager";
 import Webcam from "react-webcam";
 import AvatarCanvas from "@/components/shared/AvatarCanvas";
-import {v4 as uuid} from "uuid";
-import {AlertMessageOnCameraComponent} from "@/components/shared/AlertMessageOnCameraComponent";
+import { v4 as uuid } from "uuid";
+import { AlertMessageOnCameraComponent } from "@/components/shared/AlertMessageOnCameraComponent";
 import AnonymousMask from "@/models/textures/AnonymousMask";
 import TigerMask from "@/models/textures/TigerMask";
 
@@ -173,21 +173,23 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                 </CameraFrame>
                 {videoSize ? (
                     <>
-                        {filterView ? (
-                            <AvatarCanvas
-                                webcamInstance={
-                                    (videoRef.current as Webcam)
-                                        .video as HTMLVideoElement
-                                }
-                                //width={videoSize.width}
-                                width={parentSize.width}
-                                //height={videoSize.height}
-                                height={parentSize.height}
-                                ThreeModel={
-                                    appContext.selectedFilterItem?.threeModel!
-                                }
-                            />
-                        ) : null
+                        {
+                            filterView ? (
+                                <AvatarCanvas
+                                    webcamInstance={
+                                        (videoRef.current as Webcam)
+                                            .video as HTMLVideoElement
+                                    }
+                                    //width={videoSize.width}
+                                    width={parentSize.width}
+                                    //height={videoSize.height}
+                                    height={parentSize.height}
+                                    ThreeModel={
+                                        appContext.selectedFilterItem
+                                            ?.threeModel!
+                                    }
+                                />
+                            ) : null
                             // <DrawLandmarkCanvas
                             //     videoElement={
                             //         (videoRef.current as Webcam)
@@ -210,9 +212,9 @@ const CameraFrame = styled(Box)<{ isFullScreen: boolean }>`
     justify-items: center;
     background-color: var(--color-black);
     max-width: ${(props) =>
-            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
+        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_WIDTH}px`};
     max-height: ${(props) =>
-            props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
+        props.isFullScreen ? `100%` : `${CAMERA_FRAME_MAX_HEIGHT}px`};
     width: 100%;
     height: 100%;
     border-radius: var(--space-5);

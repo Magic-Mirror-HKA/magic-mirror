@@ -1,3 +1,7 @@
+/*
+* "Sunglass" (https://skfb.ly/opJNo) by Athos Simões is licensed under Creative Commons Attribution-NonCommercial
+* (http://creativecommons.org/licenses/by-nc/4.0/).
+* */
 import React, {forwardRef, Ref, useEffect} from "react";
 import {useLoader} from "@react-three/fiber";
 // @ts-ignore
@@ -5,7 +9,7 @@ import {TextureLoader} from "three/src/loaders/TextureLoader";
 import {MeshType, PropsMaskModel} from "@/context/ApplicationContext";
 
 const GlassesMesh = forwardRef((props: PropsMaskModel, ref: Ref<MeshType>) => {
-    const texture = useLoader(TextureLoader, '/sunglasses.png');
+    const texture = useLoader(TextureLoader, "/sunglasses-black-image-4.png");
 
     useEffect(() => {
         props.setPosition("BOTH-EYES");
@@ -13,8 +17,8 @@ const GlassesMesh = forwardRef((props: PropsMaskModel, ref: Ref<MeshType>) => {
 
     return (
         <mesh ref={ref}>
-            <planeGeometry args={[2, 1]} />
-            <meshBasicMaterial map={texture} transparent />
+            <planeGeometry args={[2.8, 2]} />
+            <meshPhysicalMaterial map={texture} transparent />
         </mesh>
     );
 });

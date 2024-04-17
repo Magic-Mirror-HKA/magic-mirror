@@ -13,13 +13,14 @@ import { Box } from "@mui/joy";
 import WebcamComponent from "@/components/shared/WebcamComponent";
 import ResizeToParentSizeComponent from "@/components/shared/ResizeToParentSizeComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
-import FaceLandmarkManager from "@/manager/FaceLandmarkManager";
 import Webcam from "react-webcam";
 import AvatarCanvas from "@/components/shared/AvatarCanvas";
 import { v4 as uuid } from "uuid";
 import { AlertMessageOnCameraComponent } from "@/components/shared/AlertMessageOnCameraComponent";
 import AnonymousMask from "@/models/textures/AnonymousMask";
 import TigerMask from "@/models/textures/TigerMask";
+import SunGlassesMask from "@/models/textures/SunGlassesMask";
+import {GraduationHatMask} from "@/models/textures/GraduationHatMask";
 
 type Props = {
     parentSize: ContainerSize;
@@ -30,7 +31,6 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
 
     const { parentSize } = props;
     const videoRef = useRef<Webcam | null>(null);
-    const lastVideoTimeRef = useRef(-1);
     const requestRef = useRef<number>(0);
     const [filterView] = useState<boolean>(true);
     const [videoSize, setVideoSize] = useState<ContainerSize | undefined>(
@@ -62,22 +62,22 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     );
 
     const filterItems: FilterItem<AnimationFilterName>[] = [
-        {
-            id: uuid(),
-            name: "Matrix",
-            src: "/matrix.png",
-            threeModel: inDevelopmentAlertMessageComponent,
-            isActive: appContext.selectedFilterItem?.name === "Matrix",
-            onClick: () => handleClickFilterItem("Matrix"),
-        },
-        {
-            id: uuid(),
-            name: "Engel & Teufel",
-            src: "/angel-and-demon.png",
-            threeModel: inDevelopmentAlertMessageComponent,
-            isActive: appContext.selectedFilterItem?.name === "Engel & Teufel",
-            onClick: () => handleClickFilterItem("Engel & Teufel"),
-        },
+        // {
+        //     id: uuid(),
+        //     name: "Matrix",
+        //     src: "/matrix.png",
+        //     threeModel: inDevelopmentAlertMessageComponent,
+        //     isActive: appContext.selectedFilterItem?.name === "Matrix",
+        //     onClick: () => handleClickFilterItem("Matrix"),
+        // },
+        // {
+        //     id: uuid(),
+        //     name: "Engel & Teufel",
+        //     src: "/angel-and-demon.png",
+        //     threeModel: inDevelopmentAlertMessageComponent,
+        //     isActive: appContext.selectedFilterItem?.name === "Engel & Teufel",
+        //     onClick: () => handleClickFilterItem("Engel & Teufel"),
+        // },
         {
             id: uuid(),
             name: "Anonym",
@@ -96,33 +96,29 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         },
         {
             id: uuid(),
-            name: "Wolke",
-            src: "/cloud_thunder.png",
-            threeModel: inDevelopmentAlertMessageComponent,
-            isActive: appContext.selectedFilterItem?.name === "Wolke",
-            onClick: () => handleClickFilterItem("Wolke"),
+            name: "Brille",
+            src: "/sunglasses-black-image-thumbnail.png",
+            threeModel: SunGlassesMask,
+            isActive: appContext.selectedFilterItem?.name === "Brille",
+            onClick: () => handleClickFilterItem("Brille"),
         },
+        {
+            id: uuid(),
+            name: "Hut",
+            src: "/graduation-hat-thumbnail.png",
+            threeModel: GraduationHatMask,
+            isActive: appContext.selectedFilterItem?.name === "Hut",
+            onClick: () => handleClickFilterItem("Hut"),
+        },
+        // {
+        //     id: uuid(),
+        //     name: "Wolke",
+        //     src: "/cloud_thunder.png",
+        //     threeModel: inDevelopmentAlertMessageComponent,
+        //     isActive: appContext.selectedFilterItem?.name === "Wolke",
+        //     onClick: () => handleClickFilterItem("Wolke"),
+        // },
     ];
-
-    const animate = () => {
-        if (
-            videoRef.current &&
-            videoRef.current?.video &&
-            videoRef.current?.video.currentTime !== lastVideoTimeRef.current
-        ) {
-            lastVideoTimeRef.current = videoRef.current.video.currentTime;
-            try {
-                const faceLandmarkManager = FaceLandmarkManager.getInstance();
-                faceLandmarkManager.detectLandmarks(
-                    videoRef.current.video,
-                    Date.now(),
-                );
-            } catch (e: unknown) {
-                console.error(e);
-            }
-        }
-        requestRef.current = requestAnimationFrame(animate);
-    };
 
     useEffect(() => {
         void (async () => {
@@ -140,7 +136,7 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                         void videoRef.current?.video?.play();
 
                         // Start animation once video is loaded
-                        requestRef.current = requestAnimationFrame(animate);
+                        // requestRef.current = requestAnimationFrame(animate);
                     };
                 }
             } catch (e) {

@@ -1,6 +1,6 @@
 import React, {Ref, useEffect, useRef, useState} from "react";
 import * as THREE from "three";
-import * as faceMesh from "../public/tensorflow/faceMesh";
+import * as faceMesh from "../../public/tensorflow/faceMesh";
 import {extend, useFrame} from '@react-three/fiber';
 import * as tf from "@tensorflow/tfjs";
 import {MaskPosition, MeshType, ThreeModelType} from "@/context/ApplicationContext";
@@ -36,7 +36,7 @@ export const TensorflowModelPositioning: React.FC<PropsTensorflowModelPositionin
                 }
 
                 // TensorFlow Model
-                await tf.setBackend('webgl');
+                await tf.setBackend("webgl");
                 // @ts-ignore
                 const loadedModel = await faceMesh.load({
                     maxContinuousChecks: 5,
@@ -70,6 +70,9 @@ export const TensorflowModelPositioning: React.FC<PropsTensorflowModelPositionin
                     break;
                 case "WHOLE-FACE":
                     positionMeshOnWholeFaceOfFaceLandmark(maskRef.current!, faceEstimates, video);
+                    break;
+                case "HEAD":
+                    positionMeshOnHeadOfFaceLandmark(maskRef.current!, faceEstimates, video);
                     break;
             }
         })();
@@ -122,6 +125,32 @@ const positionMeshOnWholeFaceOfFaceLandmark = (mesh: MeshType, tensorflowFaceEst
     const scaleY = -0.015;
     const offsetX = 0.00;
     const offsetY = -0.5;
+
+    mesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
+    mesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
+    mesh.scale.set(scaleMultiplier, scaleMultiplier, scaleMultiplier);
+    mesh.position.z = 1;
+
+    const eyeLine = new THREE.Vector2(rightEye[0] - leftEye[0], rightEye[1] - leftEye[1]);
+    const rotationZ = Math.atan2(eyeLine.y, eyeLine.x);
+    mesh.rotation.z = rotationZ;
+}
+
+const positionMeshOnHeadOfFaceLandmark = (mesh: MeshType, tensorflowFaceEstimates: any, video: HTMLVideoElement) => {
+    const keypoints = tensorflowFaceEstimates[0].scaledMesh;
+    const leftEye = keypoints[130];
+    const rightEye = keypoints[359];
+    const eyeCenter = keypoints[168];
+
+    if (!mesh) return;
+
+    const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
+    const scaleMultiplier = eyeDistance / 80;
+
+    const scaleX = -0.015;
+    const scaleY = -0.015;
+    const offsetX = 0.00;
+    const offsetY = 2;
 
     mesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
     mesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;

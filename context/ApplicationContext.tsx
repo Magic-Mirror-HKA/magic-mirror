@@ -37,7 +37,9 @@ export type AnimationFilterName =
     | "Engel & Teufel"
     | "Anonym"
     | "Tiger"
-    | "Wolke";
+    | "Wolke"
+    | "Brille"
+    | "Hut";
 
 export type BackgroundFilterName =
     | "Strand"

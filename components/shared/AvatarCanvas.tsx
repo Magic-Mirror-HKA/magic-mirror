@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 import { Html, PerspectiveCamera } from "@react-three/drei";
 import { LoadingComponent } from "@/components/shared/LoadingComponent";
 import { useFullScreenContext } from "@/context/FullScreenContext";
-import { TensorflowModelPositioning } from "@/hooks/TensorflowModelPositioning";
+import { TensorflowModelPositioning } from "@/components/shared/TensorflowModelPositioning";
 import { ThreeModelType } from "@/context/ApplicationContext";
 
 /**
@@ -36,15 +36,7 @@ const AvatarCanvas = (props: PropsAvatarCanvas) => {
                 <PerspectiveCamera />
                 <ambientLight />
                 <directionalLight />
-                <hemisphereLight />
-                {/*<OrbitControls*/}
-                {/*// target={[0, 0.65, 0]}*/}
-                {/*// enableDamping={false}*/}
-                {/*// enableRotate={false}*/}
-                {/*// enableZoom={false}*/}
-                {/*// enablePan={false}*/}
-                {/*/>*/}
-                {/*{scene ? <MeshComponent scene={scene} /> : null}*/}
+                <pointLight intensity={4} color={"black"} />
                 <Suspense
                     fallback={
                         <Html

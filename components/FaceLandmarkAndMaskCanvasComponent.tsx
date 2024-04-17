@@ -21,6 +21,8 @@ import AnonymousMask from "@/models/textures/AnonymousMask";
 import TigerMask from "@/models/textures/TigerMask";
 import SunGlassesMask from "@/models/textures/SunGlassesMask";
 import {GraduationHatMask} from "@/models/textures/GraduationHatMask";
+import {QuidditchBallFromHarryPotterMask} from "@/models/textures/QuidditchBallFromHarryPotterMask";
+import {RegularGlassesMask} from "@/models/textures/RegularGlassesMask";
 
 type Props = {
     parentSize: ContainerSize;
@@ -104,11 +106,27 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
         },
         {
             id: uuid(),
+            name: "Brille 2",
+            src: "/brille-image-2-thumbnail.png",
+            threeModel: RegularGlassesMask,
+            isActive: appContext.selectedFilterItem?.name === "Brille 2",
+            onClick: () => handleClickFilterItem("Brille 2"),
+        },
+        {
+            id: uuid(),
             name: "Hut",
             src: "/graduation-hat-thumbnail.png",
             threeModel: GraduationHatMask,
             isActive: appContext.selectedFilterItem?.name === "Hut",
             onClick: () => handleClickFilterItem("Hut"),
+        },
+        {
+            id: uuid(),
+            name: "Quidditch Ball",
+            src: "/quidditch-harry-potter-image-thumbnail.png",
+            threeModel: QuidditchBallFromHarryPotterMask,
+            isActive: appContext.selectedFilterItem?.name === "Quidditch Ball",
+            onClick: () => handleClickFilterItem("Quidditch Ball"),
         },
         // {
         //     id: uuid(),

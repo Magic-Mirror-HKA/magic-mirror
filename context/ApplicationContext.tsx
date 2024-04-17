@@ -39,7 +39,9 @@ export type AnimationFilterName =
     | "Tiger"
     | "Wolke"
     | "Brille"
-    | "Hut";
+    | "Hut"
+    | "Quidditch Ball"
+    | "Brille 2";
 
 export type BackgroundFilterName =
     | "Strand"

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useFaceLandmarkDetector } from "@/hooks/FaceLandmarkDetector";
+import { useFaceLandmark } from "@/hooks/useFaceLandmark";
 
 interface DrawLandmarkCanvasProps {
     width: number;
@@ -10,8 +10,7 @@ const DrawLandmarkCanvas = (props: DrawLandmarkCanvasProps) => {
     const drawCanvasRef = useRef<HTMLCanvasElement>(null);
     const { width, height, videoElement } = props;
 
-    const { drawLandmarks, detectLandmarks, results } =
-        useFaceLandmarkDetector();
+    const { drawLandmarks, detectLandmarks, results } = useFaceLandmark();
 
     useEffect(() => {
         detectLandmarks(videoElement, Date.now());

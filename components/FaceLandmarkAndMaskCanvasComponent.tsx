@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -20,9 +22,9 @@ import { AlertMessageOnCameraComponent } from "@/components/shared/AlertMessageO
 import AnonymousMask from "@/models/textures/AnonymousMask";
 import TigerMask from "@/models/textures/TigerMask";
 import SunGlassesMask from "@/models/textures/SunGlassesMask";
-import {GraduationHatMask} from "@/models/textures/GraduationHatMask";
-import {QuidditchBallFromHarryPotterMask} from "@/models/textures/QuidditchBallFromHarryPotterMask";
-import {RegularGlassesMask} from "@/models/textures/RegularGlassesMask";
+import { GraduationHatMask } from "@/models/textures/GraduationHatMask";
+import { QuidditchBallFromHarryPotterMask } from "@/models/textures/QuidditchBallFromHarryPotterMask";
+import { RegularGlassesMask } from "@/models/textures/RegularGlassesMask";
 
 type Props = {
     parentSize: ContainerSize;

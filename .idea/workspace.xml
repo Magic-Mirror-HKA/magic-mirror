@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa2d5a3f-5005-4860-b543-457e4539f947" name="Changes" comment="Fixed linting errors">
-      <change afterPath="$PROJECT_DIR$/models/textures/QuidditchBallFromHarryPotterMask.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/textures/RegularGlassesMask.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/brille-image-2-thumbnail.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/brille-image-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/quidditch-harry-potter-image-thumbnail.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/quidditch-harry-potter-image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/httpClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/images.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ImageListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImageListComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/CameraComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/CameraComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/WebcamComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/WebcamComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/ApplicationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/ApplicationContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +24,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="JavaScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -40,6 +41,7 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/ramse/Documents/projects/hochshule/magic-mirror/new-project/magic-mirror/public",
     "node.js.selected.package.tslint": "(autodetect)",
+    "npm.build.executor": "Run",
     "npm.dev.executor": "Run",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "C:\\Users\\ramse\\Documents\\projects\\hochshule\\magic-mirror\\new-project\\magic-mirror\\node_modules\\typescript\\lib"
@@ -51,7 +53,17 @@
       <recent name="C:\Users\ramse\Documents\projects\hochshule\magic-mirror\new-project\magic-mirror\public\mediapipe\task-vision" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.build">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -64,6 +76,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>

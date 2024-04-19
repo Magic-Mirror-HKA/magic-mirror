@@ -17,7 +17,8 @@ const WebcamComponent = forwardRef<Webcam, Props>((props: Props, ref) => {
     return (
         <Webcam
             ref={ref}
-            mirrored={true}
+            //mirrored={true}
+            id={"webcam-with-mask"}
             //onUserMedia={() => setIsCameraLoading(false)}
             style={{
                 //display: showFilters ? "none" : "block",
@@ -27,6 +28,7 @@ const WebcamComponent = forwardRef<Webcam, Props>((props: Props, ref) => {
                     ? parentSize.height
                     : CAMERA_FRAME_MAX_HEIGHT,
                 width: "100%",
+                transform: "scaleX(-1)",
                 //opacity: playScreenShotAnimation ? "10%" : "unset",
             }}
         />

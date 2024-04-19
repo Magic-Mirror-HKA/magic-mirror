@@ -20,6 +20,7 @@ import {BufferGeometry, Mesh, NormalBufferAttributes} from "three";
 import {GLTF, GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {SvgIconOwnProps} from "@mui/material";
 import Webcam from "react-webcam";
+import {combineImagesFromCanvasApi, printImageApi} from "@/api/images";
 
 export type SelectablePageItem = {
     label: ReactNode;
@@ -145,6 +146,14 @@ type Output = {
     addImage: (image: ImageTyp) => void;
     removeImage: (id: string) => void;
     clearImages: () => void;
+
+    // React Three Fiber
+    webGLRenderer?: THREE.WebGLRenderer | undefined;
+    setWebGLRenderer: (renderer: THREE.WebGLRenderer) => void;
+
+    // Apis
+    combineImagesFromCanvas: (underlyingCanvas: HTMLCanvasElement, onTopCanvas: HTMLCanvasElement) => Promise<ImageTyp>;
+    printImage: (image: ImageTyp) => Promise<void>;
 };
 
 // @ts-ignore
@@ -156,8 +165,8 @@ export const useAppContext = () => {
 
     useEffect(() => {
         return () => {
-            // Clear Filter list on unmount
-            context.clearFilterItems();
+            // Clear Filter list on unmount. No need to this since the state is overwritten each time setFilterItems is called
+            // context.clearFilterItems();
 
             // Clear image list on unmount
             // context.clearImages();
@@ -181,6 +190,7 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     const [webcamInstance, setWebcamInstance] = useState<Webcam | undefined>(
         undefined,
     );
+    const [webGLRenderer, setWebGLRenderer] = useState<THREE.WebGLRenderer | undefined>(undefined);
 
     // Images captured from Camera component
     const [images, setImages] = useState<ImageTyp[]>([]);
@@ -190,7 +200,7 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     };
 
     const addImage = (image: ImageTyp) => {
-        setImages((prevState) => [...prevState, image]);
+        setImages([image]);
     };
 
     const removeImage = (id: string) => {
@@ -200,6 +210,15 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     const clearImages = () => {
         setImages([]);
     };
+
+    // Apis
+    const combineImagesFromCanvas = async (underlyingCanvas: HTMLCanvasElement, onTopCanvas: HTMLCanvasElement): Promise<ImageTyp> => {
+        return await combineImagesFromCanvasApi(underlyingCanvas, onTopCanvas);
+    };
+
+    const printImage = async (image: ImageTyp) => {
+        return await printImageApi(image);
+    }
 
     return (
         <AppContext.Provider
@@ -215,9 +234,25 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
                 addImage,
                 removeImage,
                 clearImages,
+                webGLRenderer,
+                setWebGLRenderer,
+                combineImagesFromCanvas,
+                printImage,
             }}
         >
             {children}
         </AppContext.Provider>
     );
 };
+
+export const videoToHtmlCanvas = (videoElement: HTMLVideoElement): HTMLCanvasElement => {
+    const canvas = document.createElement("canvas");
+
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx?.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    return canvas;
+}

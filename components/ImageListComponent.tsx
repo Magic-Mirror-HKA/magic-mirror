@@ -1,15 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
-import { Alert, Badge, Box, IconButton } from "@mui/joy";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Avatar from "@mui/joy/Avatar";
+import { Alert, AspectRatio, Box, IconButton } from "@mui/joy";
 import styled from "styled-components";
 import {
     CAMERA_FRAME_MAX_HEIGHT,
+    CAMERA_FRAME_MAX_WIDTH,
     CameraToolbarButton,
     useAppContext,
 } from "@/context/ApplicationContext";
@@ -18,23 +16,20 @@ import { useRouter } from "next/navigation";
 export const ImageListComponent: React.FC = () => {
     const appContext = useAppContext();
 
-    const { images, removeImage, clearImages } = appContext;
+    const { images, clearImages } = appContext;
 
     const router = useRouter();
-
-    const [toggleDeleteSelection, setToggleDeleteSelection] =
-        useState<boolean>(false);
 
     const toolbarButtons: CameraToolbarButton[] = [
         {
             icon: AddAPhotoOutlinedIcon,
             onClick: () => router.back(),
         },
-        {
-            icon: RemoveCircleOutlineIcon,
-            disabled: images.length === 0,
-            onClick: () => setToggleDeleteSelection(!toggleDeleteSelection),
-        },
+        // {
+        //     icon: RemoveCircleOutlineIcon,
+        //     disabled: images.length === 0,
+        //     onClick: () => setToggleDeleteSelection(!toggleDeleteSelection),
+        // },
         {
             icon: DeleteForeverOutlinedIcon,
             disabled: images.length === 0,
@@ -43,12 +38,14 @@ export const ImageListComponent: React.FC = () => {
         {
             icon: LocalPrintshopOutlinedIcon,
             disabled: images.length > 1 || images.length === 0,
-            onClick: () => handlePrintPicture(),
+            onClick: () => void handlePrintPicture(),
         },
     ];
 
     // TODO: Implement printing
-    const handlePrintPicture = () => {};
+    const handlePrintPicture = async () => {
+        await appContext.printImage(images[0]);
+    };
 
     return (
         <ImageListContainer height={CAMERA_FRAME_MAX_HEIGHT}>
@@ -61,33 +58,25 @@ export const ImageListComponent: React.FC = () => {
                     </AlertContainer>
                 ) : null}
                 {images.map((image) => (
-                    <Badge
+                    <AspectRatio
+                        objectFit={"cover"}
                         key={image.id}
-                        badgeContent={<DeleteIcon sx={{ my: 1, mx: 0.3 }} />}
-                        invisible={!toggleDeleteSelection}
-                        color="danger"
-                        className={
-                            toggleDeleteSelection ? "vibration" : undefined
-                        }
-                        {...(toggleDeleteSelection && {
-                            onClick: () => removeImage(image.id),
-                        })}
                         sx={{
                             "--Badge-ringSize": "3px",
+                            borderRadius: "var(--space-4)",
+                            width: `${CAMERA_FRAME_MAX_WIDTH}px`,
+                            boxShadow: "0 0 5px grey",
                         }}
                     >
-                        <Avatar
+                        <img
                             src={image.source}
-                            className={
-                                toggleDeleteSelection ? "vibration" : undefined
-                            }
-                            sx={{
-                                borderRadius: "var(--space-3)",
-                                "--Avatar-size": "calc(1.4 * var(--space-20))",
-                                border: "1px solid var(--color-primary)",
+                            style={{
+                                borderRadius: "var(--space-4)",
+                                // border: "1px solid var(--color-primary)",
                             }}
+                            alt={"picture"}
                         />
-                    </Badge>
+                    </AspectRatio>
                 ))}
             </AlertAndAvatarListContainer>
             <IconListContainer>
@@ -100,7 +89,7 @@ export const ImageListComponent: React.FC = () => {
                         <button.icon
                             color={button.disabled ? "disabled" : "primary"}
                             sx={{
-                                fontSize: "var(--font-3xLarge)",
+                                fontSize: "var(--font-2xLarge)",
                             }}
                         />
                     </IconListItemIconButton>
@@ -124,7 +113,7 @@ const AlertAndAvatarListContainer = styled(Box)`
     gap: var(--space-8);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: var(--space-3);
+    padding: 0 var(--space-3);
 `;
 
 const AlertContainer = styled(Alert)`

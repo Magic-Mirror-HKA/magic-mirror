@@ -24,6 +24,7 @@ import {
     CameraToolbarButton,
     ContainerSize,
     useAppContext,
+    videoToHtmlCanvas,
 } from "@/context/ApplicationContext";
 import dynamic from "next/dynamic";
 import { LoadingComponent } from "@/components/shared/LoadingComponent";
@@ -58,7 +59,7 @@ const CameraComponent = forwardRef(
         const [playScreenShotAnimation, setPlayScreenShotAnimation] =
             useState<boolean>(false);
 
-        const takeScreenshot = () => {
+        const takeScreenshot = async () => {
             playScreenshotAnimation();
             let imageSrc = "";
 
@@ -74,13 +75,18 @@ const CameraComponent = forwardRef(
             }
 
             if (showFilters) {
-                // const canvas = document.querySelector(
-                //   `canvas[data-engine="three.js r160"]`,
-                // ) as HTMLCanvasElement;
-                // console.log(canvas);
-                // imageSrc = canvas.toDataURL();
+                if (!appContext.webGLRenderer) return;
 
-                alert("Das Aufnehmen mit 3D-Modellen wird noch entwickelt");
+                const videoEl = document.getElementById(
+                    "webcam-with-mask",
+                ) as HTMLVideoElement;
+                const canvas = videoToHtmlCanvas(videoEl);
+
+                const combinedImage = await appContext.combineImagesFromCanvas(
+                    canvas,
+                    appContext.webGLRenderer.domElement,
+                );
+                appContext.addImage(combinedImage);
                 return;
             }
 
@@ -109,7 +115,7 @@ const CameraComponent = forwardRef(
                 icon: CameraAltIcon,
                 isLarge: true,
                 disabled: isCameraLoading,
-                onClick: () => takeScreenshot(),
+                onClick: () => void takeScreenshot(),
             },
             {
                 icon: fullScreenContext.isFullScreen
@@ -138,7 +144,7 @@ const CameraComponent = forwardRef(
                 height: fullScreenContext.isFullScreen
                     ? parentSize.height
                     : CAMERA_FRAME_MAX_HEIGHT,
-                width: "100%",
+                width: parentSize.width,
                 opacity: playScreenShotAnimation ? "10%" : "unset",
             };
         };

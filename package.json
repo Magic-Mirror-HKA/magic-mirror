@@ -32,6 +32,7 @@
     "@tensorflow/tfjs-backend-webgl": "^4.17.0",
     "@tensorflow/tfjs-converter": "^4.17.0",
     "@tensorflow/tfjs-core": "^4.17.0",
+    "axios": "^1.6.8",
     "facefilter": "^3.3.6",
     "gltf-loader": "^1.0.0",
     "gsap": "^3.12.5",

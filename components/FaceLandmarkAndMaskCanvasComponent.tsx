@@ -1,5 +1,5 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars, react/display-name */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -7,7 +7,7 @@ import {
     CAMERA_FRAME_MAX_HEIGHT,
     CAMERA_FRAME_MAX_WIDTH,
     ContainerSize,
-    FilterItem,
+    FilterItem, stopVideoStream,
     useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";
@@ -28,12 +28,13 @@ import { RegularGlassesMask } from "@/models/textures/RegularGlassesMask";
 
 type Props = {
     parentSize: ContainerSize;
+    setIsLoading: (isLoading: boolean) => void;
 };
 const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     const fullScreenContext = useFullScreenContext();
     const appContext = useAppContext();
 
-    const { parentSize } = props;
+    const { parentSize, setIsLoading } = props;
     const videoRef = useRef<Webcam | null>(null);
     const requestRef = useRef<number>(0);
     const [filterView] = useState<boolean>(true);
@@ -106,14 +107,14 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             isActive: appContext.selectedFilterItem?.name === "Brille",
             onClick: () => handleClickFilterItem("Brille"),
         },
-        {
-            id: uuid(),
-            name: "Brille 2",
-            src: "/brille-image-2-thumbnail.png",
-            threeModel: RegularGlassesMask,
-            isActive: appContext.selectedFilterItem?.name === "Brille 2",
-            onClick: () => handleClickFilterItem("Brille 2"),
-        },
+        // {
+        //     id: uuid(),
+        //     name: "Brille 2",
+        //     src: "/brille-image-2-thumbnail.png",
+        //     threeModel: RegularGlassesMask,
+        //     isActive: appContext.selectedFilterItem?.name === "Brille 2",
+        //     onClick: () => handleClickFilterItem("Brille 2"),
+        // },
         {
             id: uuid(),
             name: "Hut",
@@ -122,14 +123,14 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             isActive: appContext.selectedFilterItem?.name === "Hut",
             onClick: () => handleClickFilterItem("Hut"),
         },
-        {
-            id: uuid(),
-            name: "Quidditch Ball",
-            src: "/quidditch-harry-potter-image-thumbnail.png",
-            threeModel: QuidditchBallFromHarryPotterMask,
-            isActive: appContext.selectedFilterItem?.name === "Quidditch Ball",
-            onClick: () => handleClickFilterItem("Quidditch Ball"),
-        },
+        // {
+        //     id: uuid(),
+        //     name: "Quidditch Ball",
+        //     src: "/quidditch-harry-potter-image-thumbnail.png",
+        //     threeModel: QuidditchBallFromHarryPotterMask,
+        //     isActive: appContext.selectedFilterItem?.name === "Quidditch Ball",
+        //     onClick: () => handleClickFilterItem("Quidditch Ball"),
+        // },
         // {
         //     id: uuid(),
         //     name: "Wolke",
@@ -141,13 +142,14 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
     ];
 
     useEffect(() => {
+        let stream: MediaStream;
         void (async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({
+                stream = await navigator.mediaDevices.getUserMedia({
                     video: true,
                 });
                 if (videoRef.current && videoRef.current.video) {
-                    videoRef.current.video.srcObject = stream;
+                    //videoRef.current.video.srcObject = stream;
                     videoRef.current.video.onloadedmetadata = () => {
                         setVideoSize({
                             width: videoRef.current?.video?.offsetWidth!,
@@ -165,7 +167,11 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
             }
         })();
 
-        return () => cancelAnimationFrame(requestRef.current);
+        return () => {
+            stopVideoStream(stream);
+            stopVideoStream(videoRef.current?.stream!);
+            cancelAnimationFrame(requestRef.current);
+        };
     }, []);
 
     return (
@@ -183,6 +189,8 @@ const FaceLandmarkAndMaskCanvasComponent: React.FC<Props> = (props: Props) => {
                             <WebcamComponent
                                 ref={videoRef}
                                 parentSize={parentSize}
+                                onUserMedia={() => setIsLoading(false)}
+                                audio={false}
                             />
                         )}
                     </ResizeToParentSizeComponent>

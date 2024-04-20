@@ -7,7 +7,7 @@ import { extend, useFrame } from "@react-three/fiber";
 import * as tf from "@tensorflow/tfjs";
 import {
     MaskPosition,
-    MeshType,
+    MeshType, stopVideoStream,
     ThreeModelType,
 } from "@/context/ApplicationContext";
 
@@ -37,10 +37,12 @@ export const TensorflowModelPositioning: React.FC<
     );
 
     useEffect(() => {
+        let stream: MediaStream;
+
         const loadResources = async () => {
             try {
                 // Camera Access
-                const stream = await navigator.mediaDevices.getUserMedia({
+                stream = await navigator.mediaDevices.getUserMedia({
                     video: true,
                 });
                 if (video) {
@@ -64,6 +66,9 @@ export const TensorflowModelPositioning: React.FC<
         };
 
         loadResources();
+        return () => {
+            stopVideoStream(stream);
+        }
     }, []);
 
     useFrame(() => {
@@ -128,8 +133,8 @@ const positionMeshOnEyesOfFaceLandmark = (
 
     const scaleX = -0.015;
     const scaleY = -0.015;
-    const offsetX = 0.0;
-    const offsetY = -0.01;
+    const offsetX = 0.05;
+    const offsetY = -0.08;
 
     mesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
     mesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
@@ -201,7 +206,7 @@ const positionMeshOnHeadOfFaceLandmark = (
     const scaleX = -0.015;
     const scaleY = -0.015;
     const offsetX = 0.0;
-    const offsetY = 2;
+    const offsetY = 1.5;
 
     mesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
     mesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;

@@ -4,34 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa2d5a3f-5005-4860-b543-457e4539f947" name="Changes" comment="Fixed linting errors">
-      <change afterPath="$PROJECT_DIR$/api/httpClient.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/images.ts" afterDir="false" />
+    <list default="true" id="04fdccbc-9606-4920-a2c4-63ce972ab604" name="Changes" comment="Printed Animations">
+      <change afterPath="$PROJECT_DIR$/public/graduation-hat2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ImageListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImageListComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/AvatarCanvas.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FaceLandmarkAndMaskCanvasComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/shared/CameraComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/CameraComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/TensorflowModelPositioning.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/TensorflowModelPositioning.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/shared/WebcamComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/WebcamComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/context/ApplicationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/ApplicationContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/textures/GraduationHatMask.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/models/textures/GraduationHatMask.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/textures/SunGlassesMask.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/models/textures/SunGlassesMask.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-        <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -41,61 +29,19 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/ramse/Documents/projects/hochshule/magic-mirror/new-project/magic-mirror/public",
     "node.js.selected.package.tslint": "(autodetect)",
-    "npm.build.executor": "Run",
-    "npm.dev.executor": "Run",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "C:\\Users\\ramse\\Documents\\projects\\hochshule\\magic-mirror\\new-project\\magic-mirror\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ramse\Documents\projects\hochshule\magic-mirror\new-project\magic-mirror\public" />
-      <recent name="C:\Users\ramse\Documents\projects\hochshule\magic-mirror\new-project\magic-mirror\public\mediapipe\task-vision" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build">
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.build" />
-        <item itemvalue="npm.dev" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="Added graduation mask and replaced class components with hooks">
-      <option name="closed" value="true" />
-      <created>1713338755643</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1713338755643</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added doudle canvas for backgrounds" />
-    <MESSAGE value="Fixed linting errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed linting errors" />
+    <MESSAGE value="Printed Animations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Printed Animations" />
   </component>
 </project>

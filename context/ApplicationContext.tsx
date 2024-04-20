@@ -256,3 +256,9 @@ export const videoToHtmlCanvas = (videoElement: HTMLVideoElement): HTMLCanvasEle
 
     return canvas;
 }
+
+// @ts-ignore
+export const stopVideoStream = (stream: MediaStream) => {
+    stream?.getTracks()
+        .forEach((track) => track.stop());
+}

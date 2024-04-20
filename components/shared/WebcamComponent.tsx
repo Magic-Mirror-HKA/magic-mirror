@@ -1,21 +1,22 @@
 import React, { forwardRef } from "react";
-import Webcam from "react-webcam";
+import Webcam, {WebcamProps} from "react-webcam";
 import {
     ContainerSize,
     CAMERA_FRAME_MAX_HEIGHT,
 } from "@/context/ApplicationContext";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 
-type Props = {
+type Props = WebcamProps & {
     parentSize: ContainerSize;
 };
 
 // eslint-disable-next-line react/display-name
 const WebcamComponent = forwardRef<Webcam, Props>((props: Props, ref) => {
-    const { parentSize } = props;
+    const { parentSize, ...rest } = props;
     const fullScreenContext = useFullScreenContext();
     return (
         <Webcam
+            {...rest}
             ref={ref}
             //mirrored={true}
             id={"webcam-with-mask"}

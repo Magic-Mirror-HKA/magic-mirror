@@ -17,7 +17,7 @@ const GlassesMesh = forwardRef((props: PropsMaskModel, ref: Ref<MeshType>) => {
 
     return (
         <mesh ref={ref}>
-            <planeGeometry args={[2.8, 2]} />
+            <planeGeometry args={[2.8, 1.8]} />
             <meshPhysicalMaterial map={texture} transparent />
         </mesh>
     );

@@ -5,7 +5,7 @@ import {TextureLoader} from "three/src/loaders/TextureLoader";
 import {MeshType, PropsMaskModel} from "@/context/ApplicationContext";
 
 export const GraduationHatMask = forwardRef((props: PropsMaskModel, ref: Ref<MeshType>) => {
-    const texture = useLoader(TextureLoader, "/graduation-hat.png");
+    const texture = useLoader(TextureLoader, "/graduation-hat2.png");
 
     useEffect(() => {
         props.setPosition("HEAD");
@@ -13,7 +13,7 @@ export const GraduationHatMask = forwardRef((props: PropsMaskModel, ref: Ref<Mes
 
     return (
         <mesh ref={ref}>
-            <planeGeometry args={[5, 2.5]} />
+            <planeGeometry args={[7, 3.5]} />
             <meshPhysicalMaterial map={texture} transparent />
         </mesh>
     );

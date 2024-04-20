@@ -172,15 +172,17 @@ const CameraComponent = forwardRef(
                         <ResizeToParentSizeComponent>
                             {(parentSize) => (
                                 <React.Fragment>
-                                    <Webcam
-                                        id="webcam"
-                                        ref={ref}
-                                        mirrored={mirrored}
-                                        onUserMedia={() =>
-                                            setIsCameraLoading(false)
-                                        }
-                                        style={getWebcamStyle(parentSize)}
-                                    />
+                                    {showFilters ? <div/> :
+                                        <Webcam
+                                            id="webcam"
+                                            ref={ref}
+                                            mirrored={mirrored}
+                                            onUserMedia={() =>
+                                                setIsCameraLoading(false)
+                                            }
+                                            style={getWebcamStyle(parentSize)}
+                                        />
+                                    }
                                     {outputCanvas && outputCanvas}
                                     {showFilters ? (
                                         // <FaceLandMarkerComponent
@@ -193,6 +195,7 @@ const CameraComponent = forwardRef(
                                         // />
                                         <FaceLandmarkAndMaskCanvasComponent
                                             parentSize={parentSize}
+                                            setIsLoading={setIsCameraLoading}
                                         />
                                     ) : null}
                                 </React.Fragment>

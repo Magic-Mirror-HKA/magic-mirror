@@ -45,6 +45,7 @@ export const ImageListComponent: React.FC = () => {
     // TODO: Implement printing
     const handlePrintPicture = async () => {
         await appContext.printImage(images[0]);
+        appContext.clearImages();
     };
 
     return (

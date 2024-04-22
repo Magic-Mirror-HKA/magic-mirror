@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04fdccbc-9606-4920-a2c4-63ce972ab604" name="Changes" comment="Fixed linting errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ImageListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImageListComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,8 +83,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.start" />
-        <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
@@ -132,6 +132,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Printed Animations" />
     <MESSAGE value="Fixed linting errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed linting errors" />
+    <MESSAGE value="Delete picture after it has been printed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete picture after it has been printed" />
   </component>
 </project>

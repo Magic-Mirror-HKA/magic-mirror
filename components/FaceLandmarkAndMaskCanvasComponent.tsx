@@ -7,7 +7,8 @@ import {
     CAMERA_FRAME_MAX_HEIGHT,
     CAMERA_FRAME_MAX_WIDTH,
     ContainerSize,
-    FilterItem, stopVideoStream,
+    FilterItem,
+    stopVideoStream,
     useAppContext,
 } from "@/context/ApplicationContext";
 import styled from "styled-components";

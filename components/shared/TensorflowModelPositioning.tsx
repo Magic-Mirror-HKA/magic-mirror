@@ -7,7 +7,8 @@ import { extend, useFrame } from "@react-three/fiber";
 import * as tf from "@tensorflow/tfjs";
 import {
     MaskPosition,
-    MeshType, stopVideoStream,
+    MeshType,
+    stopVideoStream,
     ThreeModelType,
 } from "@/context/ApplicationContext";
 
@@ -68,7 +69,7 @@ export const TensorflowModelPositioning: React.FC<
         loadResources();
         return () => {
             stopVideoStream(stream);
-        }
+        };
     }, []);
 
     useFrame(() => {

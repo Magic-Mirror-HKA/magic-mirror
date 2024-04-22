@@ -172,7 +172,9 @@ const CameraComponent = forwardRef(
                         <ResizeToParentSizeComponent>
                             {(parentSize) => (
                                 <React.Fragment>
-                                    {showFilters ? <div/> :
+                                    {showFilters ? (
+                                        <div />
+                                    ) : (
                                         <Webcam
                                             id="webcam"
                                             ref={ref}
@@ -182,7 +184,7 @@ const CameraComponent = forwardRef(
                                             }
                                             style={getWebcamStyle(parentSize)}
                                         />
-                                    }
+                                    )}
                                     {outputCanvas && outputCanvas}
                                     {showFilters ? (
                                         // <FaceLandMarkerComponent

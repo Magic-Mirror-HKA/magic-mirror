@@ -1,12 +1,12 @@
 import React, { forwardRef } from "react";
-import Webcam, {WebcamProps} from "react-webcam";
+import Webcam, { WebcamProps } from "react-webcam";
 import {
     ContainerSize,
     CAMERA_FRAME_MAX_HEIGHT,
 } from "@/context/ApplicationContext";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 
-type Props = WebcamProps & {
+type Props = Partial<WebcamProps> & {
     parentSize: ContainerSize;
 };
 

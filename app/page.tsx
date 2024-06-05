@@ -7,7 +7,7 @@ import { SelectablePageItem } from "@/context/ApplicationContext";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import MasksIcon from "@mui/icons-material/Masks";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import SettingsIcon from "@mui/icons-material/Settings";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import SelectableItemListComponent from "@/components/shared/SelectableItemListComponent";
 import { SxProps } from "@mui/joy/styles/types";
 import { useRouter } from "next/navigation";
@@ -28,17 +28,23 @@ const Home: React.FC = () => {
             onClick: () => router.push("/filter"),
         },
         {
+            label: "Welcher Studiengang passt zu dir?",
+            // @ts-expect-error
+            icon: <SchoolOutlinedIcon fontSize="inherit" sx={IconStyle} />,
+            onClick: () => router.push("/wizard-hat"),
+        },
+        {
             label: "Spiele",
             // @ts-expect-error
             icon: <SportsEsportsIcon fontSize="inherit" sx={IconStyle} />,
-            onClick: () => router.push("/games"),
+            onClick: () => alert("Diese Seite wird noch entwickelt."),
         },
-        {
-            label: "Einstellungen",
-            // @ts-expect-error
-            icon: <SettingsIcon fontSize="inherit" sx={IconStyle} />,
-            onClick: () => alert("In dev"),
-        },
+        // {
+        //     label: "Einstellungen",
+        //     // @ts-expect-error
+        //     icon: <SettingsIcon fontSize="inherit" sx={IconStyle} />,
+        //     onClick: () => alert("In dev"),
+        // },
     ];
 
     return (

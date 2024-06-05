@@ -89,6 +89,16 @@ export type MeshType = Mesh<BufferGeometry<NormalBufferAttributes>>;
 
 export type MaskPosition = "HEAD" | "BOTH-EYES" | "NOSE" | "MOUTH" | "CHIN" | "WHOLE-FACE";
 
+export type QuestionAnswer = {
+    question: string;
+    options: {
+        text: string;
+        value: string;
+        listPrefix: string;
+        onClick: () => void;
+    }[];
+};
+
 export type PropsMaskModel = {
     setPosition: (position: MaskPosition) => void;
 }

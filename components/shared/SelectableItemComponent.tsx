@@ -48,6 +48,7 @@ const ItemLabel = styled(Typography)(() => ({
     fontWeight: "600",
     fontSize: "var(--font-large)",
     color: "inherit",
+    textAlign: "center",
 }));
 
 export default SelectableItemComponent;

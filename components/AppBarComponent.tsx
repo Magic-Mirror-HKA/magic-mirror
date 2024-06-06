@@ -7,8 +7,8 @@ const AppBarComponent: React.FC = () => {
         <AppBarContainer>
             <AppName>Magic Mirror</AppName>
             <AvatarContainer>
-                <UserName>Admin</UserName>
-                <AvatarComponent variant="solid" size="md" />
+                {/*<UserName>Admin</UserName>*/}
+                {/*<AvatarComponent variant="solid" size="md" />*/}
             </AvatarContainer>
         </AppBarContainer>
     );

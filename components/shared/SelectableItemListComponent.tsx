@@ -23,7 +23,7 @@ const SelectableItemListComponent: React.FC<Props> = (props: Props) => {
 
 const SelectablePageItemListContainer = styled(Box)(() => ({
     display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
+    gridTemplateColumns: "repeat(3, 1fr)",
     gap: "var(--space-20)",
     "@media screen and (max-width: 1250px)": {
         gap: "var(--space-10)",

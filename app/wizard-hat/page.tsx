@@ -40,12 +40,12 @@ const WizardHatPage: React.FC = () => {
                 },
                 {
                     text: "Du siehst die Welt als deinen Spielplatz und möchtest in einer globalen Wirtschaftsumgebung arbeiten. Internationale Unternehmen und IT sind deine Leidenschaft.",
-                    value: "Internationales IT-Business",
+                    value: "Internationales IT Business",
                     listPrefix: "C",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Internationales IT-Business",
+                            "Internationales IT Business",
                         ]);
                     },
                 },
@@ -76,12 +76,12 @@ const WizardHatPage: React.FC = () => {
                 },
                 {
                     text: "Du möchtest sowohl technische als auch interkulturelle Fähigkeiten entwickeln, um globale Herausforderungen zu meistern.",
-                    value: "Internationales IT-Business",
+                    value: "Internationales IT Business",
                     listPrefix: "C",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Internationales IT-Business",
+                            "Internationales IT Business",
                         ]);
                     },
                 },
@@ -101,7 +101,7 @@ const WizardHatPage: React.FC = () => {
 
     return (
         <PageContentWrapperComponent
-            title={"Welcher Studiengang passt zu dir?"}
+            title={"Welcher Studiengang passt zu mir?"}
             showBackButton
         >
             {activeStep !== maxSteps ? (
@@ -111,17 +111,46 @@ const WizardHatPage: React.FC = () => {
                 />
             ) : (
                 <Typography
-                    level={"h1"}
+                    // level={"h1"}
                     textAlign={"center"}
-                    sx={{ maxWidth: "50%", m: "100px auto " }}
+                    sx={{ fontSize: "35px", maxWidth: "50%", m: "100px auto " }}
                 >
-                    {getResults().length === 1
-                        ? `Schaue Dir den Studiengang ${
-                              getResults()[0]
-                          } genauer an`
-                        : `Schaue Dir die Studiengänge ${getResults()[0]} und ${
-                              getResults()[1]
-                          } genauer an`}
+                    {getResults().length === 1 ? (
+                        <>
+                            Schaue Dir den Studiengang{" "}
+                            <span
+                                style={{
+                                    fontWeight: 600,
+                                    color: "var(--color-primary)",
+                                }}
+                            >
+                                {getResults()[0]}
+                            </span>{" "}
+                            genauer an
+                        </>
+                    ) : (
+                        <>
+                            Schaue Dir die Studiengänge{" "}
+                            <span
+                                style={{
+                                    fontWeight: 600,
+                                    color: "var(--color-primary)",
+                                }}
+                            >
+                                {getResults()[0]}
+                            </span>{" "}
+                            und{" "}
+                            <span
+                                style={{
+                                    fontWeight: 600,
+                                    color: "var(--color-primary)",
+                                }}
+                            >
+                                {getResults()[1]}
+                            </span>{" "}
+                            genauer an
+                        </>
+                    )}
                 </Typography>
             )}
         </PageContentWrapperComponent>

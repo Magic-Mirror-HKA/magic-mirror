@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="04fdccbc-9606-4920-a2c4-63ce972ab604" name="Changes" comment="Return to previous view after picture print">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wizard-hat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/wizard-hat/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/AppBarComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AppBarComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shared/SelectableItemListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/SelectableItemListComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +63,7 @@
       <recent name="C:\Users\ramse\Documents\projects\hochshule\magic-mirror\new-project\magic-mirror\public" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.build">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -99,11 +96,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.start" />
-        <item itemvalue="npm.build" />
-        <item itemvalue="npm.build" />
-        <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
   </component>
@@ -136,7 +133,15 @@
       <workItem from="1715444335314" duration="876000" />
       <workItem from="1717521453598" duration="21429000" />
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Major in answer of talking graduation hat bold">
+      <option name="closed" value="true" />
+      <created>1717671316453</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717671316453</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +173,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Printed Animations" />
     <MESSAGE value="Fixed linting errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed linting errors" />
+    <MESSAGE value="Major in answer of talking graduation hat bold" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major in answer of talking graduation hat bold" />
   </component>
 </project>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, styled, Typography } from "@mui/joy";
-import Avatar from "@mui/joy/Avatar";
+//import Avatar from "@mui/joy/Avatar";
 
 const AppBarComponent: React.FC = () => {
     return (
@@ -49,16 +49,16 @@ const AvatarContainer = styled(Box)(() => ({
     // boxShadow: "0 0 4px grey",
 }));
 
-const UserName = styled(Box)(({ theme }) => ({
-    fontWeight: "600",
-    //fontSize: "var(--font-small)",
-    color: theme.vars.palette.primary["500"],
-}));
-
-const AvatarComponent = styled(Avatar)(({ theme }) => ({
-    color: theme.vars.palette.primary["500"],
-    backgroundColor: "var(--color-white)",
-    border: `2px solid ${theme.vars.palette.primary["500"]}`,
-}));
+// const UserName = styled(Box)(({ theme }) => ({
+//     fontWeight: "600",
+//     //fontSize: "var(--font-small)",
+//     color: theme.vars.palette.primary["500"],
+// }));
+//
+// const AvatarComponent = styled(Avatar)(({ theme }) => ({
+//     color: theme.vars.palette.primary["500"],
+//     backgroundColor: "var(--color-white)",
+//     border: `2px solid ${theme.vars.palette.primary["500"]}`,
+// }));
 
 export default AppBarComponent;

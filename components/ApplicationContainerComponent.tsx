@@ -22,29 +22,21 @@ const ApplicationContainerComponent: React.FC<Props> = (props: Props) => {
 
 const AppContainer = styled(Box)(() => ({
     display: "grid",
-    // TODO: Make the whole content to stick in the middle horizontally and vertically
-    // alignItems: "center",
-    // alignContent: "center",
     maxWidth: "var(--max-page-width)",
-    maxHeight: "var(--max-page-height)",
-    height: "100%",
+    //maxHeight: "var(--max-dock-height)",
+    //height: "100%",
     alignSelf: "center",
     justifySelf: "center",
-    // TODO: Make the whole content to stick in the middle horizontally and vertically
-    // position: "absolute",
-    // top: "50%",
-    // bottom: "50%",
-    // left: "50%",
-    // right: "50%",
-    // transform: "translate(-50%, -50%)",
     width: "100%",
+    height: "100%",
 }));
 
 const AppContentWrapper = styled(Box)(() => ({
     display: "grid",
     gap: "var(--space-4)",
-    gridTemplateRows: "max-content var(--max-dock-height) auto",
-    margin: "var(--space-9) var(--space-4) 0 var(--space-4)",
+    alignSelf: "center",
+    gridTemplateRows: "4dvh 77dvh 4dvh",
+    margin: "var(--space-9) var(--space-4)",
 }));
 
 export default ApplicationContainerComponent;

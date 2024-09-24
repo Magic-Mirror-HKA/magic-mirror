@@ -74,12 +74,14 @@ const PageWrapperContainer = styled(Box)(() => ({
     display: "grid",
     gap: "var(--space-10)",
     gridTemplateRows: "max-content 1fr",
+    alignItems: "start",
     justifySelf: "center",
     padding: "var(--space-10)",
-    //height: "100%",
+    height: "100%",
     "@media screen and (max-width: 900px)": {
         padding: "var(--space-7)",
     },
+    overflowY: "auto",
 }));
 
 const PageTitleAndBackButtonContainer = styled(Box)(() => ({

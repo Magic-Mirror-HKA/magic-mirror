@@ -10,12 +10,12 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     display: grid;
-    height: 100vh;
+    height: 100dvh;
 }
 
 :root {
     /* Dimensions */
-    --max-page-width: 1400px;
+    --max-page-width: 75dvw;
     --max-page-height: 1000px;
     --max-dock-height: 700px;
     --navbar-height: 60px;

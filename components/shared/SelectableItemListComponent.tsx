@@ -25,6 +25,7 @@ const SelectablePageItemListContainer = styled(Box)(() => ({
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: "var(--space-20)",
+    alignItems: "start",
     "@media screen and (max-width: 1250px)": {
         gap: "var(--space-10)",
         gridTemplateColumns: "repeat(3, 1fr)",

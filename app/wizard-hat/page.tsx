@@ -104,7 +104,7 @@ const WizardHatPage: React.FC = () => {
     const clearSelection = () => {
         setSolutions([]);
         setActiveStep(0);
-    }
+    };
 
     return (
         <PageContentWrapperComponent
@@ -114,13 +114,13 @@ const WizardHatPage: React.FC = () => {
             {activeStep !== maxSteps ? (
                 <>
                     <QuestionAnswerComponent
-                      onSelect={() => setActiveStep((prev) => prev + 1)}
-                      questionAnswer={questionAnswerList[activeStep]}
+                        onSelect={() => setActiveStep((prev) => prev + 1)}
+                        questionAnswer={questionAnswerList[activeStep]}
                     />
                     <Typography
-                      color="primary"
-                      textAlign="center"
-                      fontWeight="bold"
+                        color="primary"
+                        textAlign="center"
+                        fontWeight="bold"
                     >
                         {activeStep + 1} / {maxSteps}
                     </Typography>
@@ -128,66 +128,70 @@ const WizardHatPage: React.FC = () => {
             ) : (
                 <div>
                     <Typography
-                      // level={"h1"}
-                      textAlign={"center"}
-                      sx={{ fontSize: "35px", maxWidth: "50%", m: "100px auto " }}
+                        // level={"h1"}
+                        textAlign={"center"}
+                        sx={{
+                            fontSize: "35px",
+                            maxWidth: "50%",
+                            m: "100px auto ",
+                        }}
                     >
                         {getResults().length === 1 ? (
-                          <>
-                              Schaue Dir den Studiengang{" "}
-                              <span
-                                style={{
-                                    fontWeight: 600,
-                                    color: "var(--color-primary)",
-                                }}
-                              >
-                                {getResults()[0]}
-                            </span>{" "}
-                              genauer an
-                          </>
+                            <>
+                                Schaue Dir den Studiengang{" "}
+                                <span
+                                    style={{
+                                        fontWeight: 600,
+                                        color: "var(--color-primary)",
+                                    }}
+                                >
+                                    {getResults()[0]}
+                                </span>{" "}
+                                genauer an
+                            </>
                         ) : (
-                          <>
-                              Schaue Dir die Studiengänge{" "}
-                              <span
-                                style={{
-                                    fontWeight: 600,
-                                    color: "var(--color-primary)",
-                                }}
-                              >
-                                {getResults()[0]}
-                            </span>{" "}
-                              und{" "}
-                              <span
-                                style={{
-                                    fontWeight: 600,
-                                    color: "var(--color-primary)",
-                                }}
-                              >
-                                {getResults()[1]}
-                            </span>{" "}
-                              genauer an
-                          </>
+                            <>
+                                Schaue Dir die Studiengänge{" "}
+                                <span
+                                    style={{
+                                        fontWeight: 600,
+                                        color: "var(--color-primary)",
+                                    }}
+                                >
+                                    {getResults()[0]}
+                                </span>{" "}
+                                und{" "}
+                                <span
+                                    style={{
+                                        fontWeight: 600,
+                                        color: "var(--color-primary)",
+                                    }}
+                                >
+                                    {getResults()[1]}
+                                </span>{" "}
+                                genauer an
+                            </>
                         )}
                     </Typography>
                     <Stack
-                      direction={"row"}
-                      spacing={"var(--space-4)"}
-                      sx={{
-                          justifyContent: "center",
-                          justifyItems: "center",
-                      }}
+                        direction={"row"}
+                        spacing={"var(--space-4)"}
+                        sx={{
+                            justifyContent: "center",
+                            justifyItems: "center",
+                        }}
                     >
                         <Button
-                          variant="solid"
-                          size="lg"
-                          onClick={clearSelection}
+                            variant="solid"
+                            size="lg"
+                            onClick={clearSelection}
                         >
                             Erneut auswählen
                         </Button>
                         <Button
-                          variant="outlined"
-                          size="lg"
-                          onClick={() => router.push("/")}
+                            variant="outlined"
+                            size="lg"
+                            onClick={() => router.push("/")}
                         >
                             Zur Startseite
                         </Button>

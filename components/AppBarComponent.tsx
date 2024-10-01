@@ -24,6 +24,7 @@ const AppBarContainer = styled(Box)(() => ({
     "@media screen and (max-width: 900px)": {
         padding: "0 var(--space-1)",
     },
+    marginTop: -20,
 }));
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -32,6 +32,7 @@ const ItemIconContainer = styled(Box)(({ theme }) => ({
     display: "grid",
     alignItems: "center",
     alignContent: "center",
+    alignSelf: "start",
     gap: "var(--space-2)",
     padding: "var(--space-10)",
     borderRadius: "var(--space-6)",
@@ -49,6 +50,7 @@ const ItemLabel = styled(Typography)(() => ({
     fontSize: "var(--font-large)",
     color: "inherit",
     textAlign: "center",
+    alignSelf: "start",
 }));
 
 export default SelectableItemComponent;

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
 import { QuestionAnswer } from "@/context/ApplicationContext";
 import dynamic from "next/dynamic";
-import { Typography } from "@mui/joy";
+import { Button, Stack, Typography } from "@mui/joy";
+import { useRouter } from "next/navigation";
 
 const QuestionAnswerComponent = dynamic(
     () => {
@@ -12,6 +13,7 @@ const QuestionAnswerComponent = dynamic(
     { ssr: false },
 );
 const WizardHatPage: React.FC = () => {
+    const router = useRouter();
     const [solutions, setSolutions] = useState<string[]>([]);
     const [activeStep, setActiveStep] = useState(0);
 
@@ -99,59 +101,98 @@ const WizardHatPage: React.FC = () => {
         );
     };
 
+    const clearSelection = () => {
+        setSolutions([]);
+        setActiveStep(0);
+    }
+
     return (
         <PageContentWrapperComponent
             title={"Welcher Studiengang passt zu mir?"}
             showBackButton
         >
             {activeStep !== maxSteps ? (
-                <QuestionAnswerComponent
-                    onSelect={() => setActiveStep((prev) => prev + 1)}
-                    questionAnswer={questionAnswerList[activeStep]}
-                />
+                <>
+                    <QuestionAnswerComponent
+                      onSelect={() => setActiveStep((prev) => prev + 1)}
+                      questionAnswer={questionAnswerList[activeStep]}
+                    />
+                    <Typography
+                      color="primary"
+                      textAlign="center"
+                      fontWeight="bold"
+                    >
+                        {activeStep + 1} / {maxSteps}
+                    </Typography>
+                </>
             ) : (
-                <Typography
-                    // level={"h1"}
-                    textAlign={"center"}
-                    sx={{ fontSize: "35px", maxWidth: "50%", m: "100px auto " }}
-                >
-                    {getResults().length === 1 ? (
-                        <>
-                            Schaue Dir den Studiengang{" "}
-                            <span
+                <div>
+                    <Typography
+                      // level={"h1"}
+                      textAlign={"center"}
+                      sx={{ fontSize: "35px", maxWidth: "50%", m: "100px auto " }}
+                    >
+                        {getResults().length === 1 ? (
+                          <>
+                              Schaue Dir den Studiengang{" "}
+                              <span
                                 style={{
                                     fontWeight: 600,
                                     color: "var(--color-primary)",
                                 }}
-                            >
+                              >
                                 {getResults()[0]}
                             </span>{" "}
-                            genauer an
-                        </>
-                    ) : (
-                        <>
-                            Schaue Dir die Studiengänge{" "}
-                            <span
+                              genauer an
+                          </>
+                        ) : (
+                          <>
+                              Schaue Dir die Studiengänge{" "}
+                              <span
                                 style={{
                                     fontWeight: 600,
                                     color: "var(--color-primary)",
                                 }}
-                            >
+                              >
                                 {getResults()[0]}
                             </span>{" "}
-                            und{" "}
-                            <span
+                              und{" "}
+                              <span
                                 style={{
                                     fontWeight: 600,
                                     color: "var(--color-primary)",
                                 }}
-                            >
+                              >
                                 {getResults()[1]}
                             </span>{" "}
-                            genauer an
-                        </>
-                    )}
-                </Typography>
+                              genauer an
+                          </>
+                        )}
+                    </Typography>
+                    <Stack
+                      direction={"row"}
+                      spacing={"var(--space-4)"}
+                      sx={{
+                          justifyContent: "center",
+                          justifyItems: "center",
+                      }}
+                    >
+                        <Button
+                          variant="solid"
+                          size="lg"
+                          onClick={clearSelection}
+                        >
+                            Erneut auswählen
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          size="lg"
+                          onClick={() => router.push("/")}
+                        >
+                            Zur Startseite
+                        </Button>
+                    </Stack>
+                </div>
             )}
         </PageContentWrapperComponent>
     );

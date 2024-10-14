@@ -4,7 +4,6 @@ import { Box, styled } from "@mui/joy";
 import AppBarComponent from "@/components/AppBarComponent";
 // import AppFooterComponent from "@/components/AppFooterComponent";
 import MainDockComponent from "@/components/MainDockComponent";
-import Image from "next/image";
 
 type Props = PropsWithChildren;
 
@@ -16,17 +15,17 @@ const ApplicationContainerComponent: React.FC<Props> = (props: Props) => {
                 <AppBarComponent />
                 <MainDockWithLogoContainer>
                     <FacultyName
-                      src={"/HKA_IWI_Wortmarke_RGB.svg"}
-                      alt={"HKA-Logo Wortmarke"}
-                      width={171}
-                      height={95}
+                        src={"/HKA_IWI_Wortmarke_RGB.svg"}
+                        alt={"HKA-Logo Wortmarke"}
+                        width={171}
+                        height={95}
                     />
                     <MainDockComponent>{children}</MainDockComponent>
                     <UniversityLogo
-                      src={"/HKA_IWI_Bildmarke_RGB.svg"}
-                      alt={"HKA-Logo Wortmarke"}
-                      width={137}
-                      height={320}
+                        src={"/HKA_IWI_Bildmarke_RGB.svg"}
+                        alt={"HKA-Logo Wortmarke"}
+                        width={137}
+                        height={320}
                     />
                 </MainDockWithLogoContainer>
                 {/*<AppFooterComponent />*/}

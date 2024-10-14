@@ -61,11 +61,11 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
                         <BackIcon sx={{ color: "inherit" }} />
                     </IconButton>
                 ) : null}
-                {title ?
-                  <Typography level={"h1"} sx={pageHeaderTitleStyles}>
-                    {title}
-                  </Typography> : null
-                }
+                {title ? (
+                    <Typography level={"h1"} sx={pageHeaderTitleStyles}>
+                        {title}
+                    </Typography>
+                ) : null}
             </PageTitleAndBackButtonContainer>
             {children}
         </PageWrapperContainer>

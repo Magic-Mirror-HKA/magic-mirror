@@ -47,7 +47,7 @@ const Home: React.FC = () => {
     ];
 
     return (
-        <PageContentWrapperComponent title={"Startseite"}>
+        <PageContentWrapperComponent>
             <SelectableItemListComponent items={selectableItems} />
         </PageContentWrapperComponent>
     );

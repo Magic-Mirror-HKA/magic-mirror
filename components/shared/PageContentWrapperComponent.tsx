@@ -9,7 +9,7 @@ import { SxProps } from "@mui/joy/styles/types";
 import { useFullScreenContext } from "@/context/FullScreenContext";
 
 type Props = PropsWithChildren & {
-    title: string;
+    title?: string;
     showBackButton?: boolean;
     // titleStyle?: SxProps;
     // buttonsStyle?: SxProps;
@@ -61,9 +61,11 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
                         <BackIcon sx={{ color: "inherit" }} />
                     </IconButton>
                 ) : null}
-                <Typography level={"h1"} sx={pageHeaderTitleStyles}>
+                {title ?
+                  <Typography level={"h1"} sx={pageHeaderTitleStyles}>
                     {title}
-                </Typography>
+                  </Typography> : null
+                }
             </PageTitleAndBackButtonContainer>
             {children}
         </PageWrapperContainer>

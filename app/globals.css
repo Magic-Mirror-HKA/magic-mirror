@@ -6,9 +6,6 @@ body {
     border: 0;
     font-family: Roboto, Rubik, Inter, "Helvetica Neue", sans-serif !important;
     font-size: var(--font-normal) !important;
-    background: url("/body-bg.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
     display: grid;
     height: 100dvh;
 }

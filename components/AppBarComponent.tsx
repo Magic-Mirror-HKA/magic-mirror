@@ -20,7 +20,7 @@ const AppBarContainer = styled(Box)(() => ({
     alignItems: "center",
     width: "100%",
     borderRadius: "10px",
-    padding: "0 var(--space-7)",
+    padding: "0 var(--space-1)",
     "@media screen and (max-width: 900px)": {
         padding: "0 var(--space-1)",
     },

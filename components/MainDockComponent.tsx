@@ -10,6 +10,8 @@ const MainDockComponent: React.FC<Props> = (props: Props) => {
 
 const MainDockContainer = styled(Box)(({ theme }) => ({
     width: "100%",
+    maxWidth: "var(--max-page-width)",
+    height: "80dvh",
     //backgroundColor: "#c9c9c9",
     borderRadius: "var(--space-5)",
     //overflowY: "auto",

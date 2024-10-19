@@ -7,11 +7,13 @@ import { useAppContext } from "@/context/ApplicationContext";
 import { useSelfieSegmentation } from "@/hooks/useSelfieSegmentation";
 import { CanvasComponent } from "@/components/shared/CanvasComponent";
 import { useCustomBackground } from "@/hooks/useCustomBackground";
+import { useFullScreenContext } from "@/context/FullScreenContext";
 
 const CameraPage: React.FC = () => {
     const webcamRef = useRef<Webcam | null>(null);
 
     const appContext = useAppContext();
+    const fullScreenContext = useFullScreenContext();
 
     const outputCanvas = useRef<HTMLCanvasElement | null>(null);
     const [image, setImage] = useState<HTMLImageElement | undefined>(undefined);
@@ -34,6 +36,7 @@ const CameraPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        fullScreenContext.goFullScreen();
         appContext.setFilterItems(filterItems);
         // Initial selected background
         appContext.setSelectedFilterItem(defaultSelectedFilterItem);

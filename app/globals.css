@@ -8,6 +8,10 @@ body {
     font-size: var(--font-normal) !important;
     display: grid;
     height: 100dvh;
+
+    background: url("/body-bg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 :root {

@@ -12,12 +12,13 @@ const MainDockContainer = styled(Box)(({ theme }) => ({
     width: "100%",
     maxWidth: "var(--max-page-width)",
     height: "80dvh",
+    justifySelf: "center",
     //backgroundColor: "#c9c9c9",
     borderRadius: "var(--space-5)",
     //overflowY: "auto",
     //opacity: "95%",
     backdropFilter: "blur(150px)",
-    boxShadow: `0 0 15px ${theme.vars.palette.primary["500"]}`,
+    boxShadow: `0 0 10px ${theme.vars.palette.primary["500"]}`,
     border: `1px solid ${theme.vars.palette.primary["500"]}`,
 }));
 

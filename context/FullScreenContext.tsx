@@ -32,7 +32,7 @@ type Props = PropsWithChildren;
 
 export const FullScreenContextProvider: React.FC<Props> = (props: Props) => {
     const { children } = props;
-    const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+    const [isFullScreen, setIsFullScreen] = useState<boolean>(true);
 
     const goFullScreen = () => {
         setIsFullScreen(true);

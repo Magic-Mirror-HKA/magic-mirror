@@ -6,7 +6,7 @@ import PageContentWrapperComponent from "@/components/shared/PageContentWrapperC
 import { SelectablePageItem } from "@/context/ApplicationContext";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import MasksIcon from "@mui/icons-material/Masks";
-import SchoolIcon from "@mui/icons-material/School";
+import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import SelectableItemListComponent from "@/components/shared/SelectableItemListComponent";
 import { SxProps } from "@mui/joy/styles/types";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         {
             label: "Welcher Studiengang passt zu mir?",
             // @ts-expect-error
-            icon: <SchoolIcon fontSize="inherit" sx={IconStyle} />,
+            icon: <SchoolRoundedIcon fontSize="inherit" sx={IconStyle} />,
             onClick: () => router.push("/wizard-hat"),
         },
         // {

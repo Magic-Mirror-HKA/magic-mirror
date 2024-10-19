@@ -103,26 +103,27 @@ const CameraComponent = forwardRef(
         };
 
         const cameraToolbarButtons: CameraToolbarButton[] = [
-            ...(showCustomBackground
-                ? []
-                : [
-                      {
-                          icon: CachedIcon,
-                          onClick: () => setMirrored(!mirrored),
-                      },
-                  ]),
+            // ...(showCustomBackground
+            //     ? []
+            //     : [
+            //           {
+            //               icon: CachedIcon,
+            //               onClick: () => setMirrored(!mirrored),
+            //           },
+            //     ]
+            // ),
             {
                 icon: CameraAltIcon,
                 isLarge: true,
                 disabled: isCameraLoading,
                 onClick: () => void takeScreenshot(),
             },
-            {
-                icon: fullScreenContext.isFullScreen
-                    ? ZoomInMapOutlinedIcon
-                    : ZoomOutMapIcon,
-                onClick: () => toggleFullScreen(),
-            },
+            // {
+            //     icon: fullScreenContext.isFullScreen
+            //         ? ZoomInMapOutlinedIcon
+            //         : ZoomOutMapIcon,
+            //     onClick: () => toggleFullScreen(),
+            // },
         ];
 
         const toggleFullScreen = () => {
@@ -141,9 +142,7 @@ const CameraComponent = forwardRef(
                         : "block",
                 objectFit: "cover",
                 borderRadius: "var(--space-5)",
-                height: fullScreenContext.isFullScreen
-                    ? parentSize.height
-                    : CAMERA_FRAME_MAX_HEIGHT,
+                height: parentSize.height,
                 width: parentSize.width,
                 opacity: playScreenShotAnimation ? "10%" : "unset",
             };

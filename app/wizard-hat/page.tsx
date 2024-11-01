@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
 import { QuestionAnswer } from "@/context/ApplicationContext";
 import dynamic from "next/dynamic";
-import { AspectRatio, Button, Stack, Typography } from "@mui/joy";
-import { useRouter } from "next/navigation";
+import { Button, Stack, Typography } from "@mui/joy";
 
 const QuestionAnswerComponent = dynamic(
     () => {
@@ -13,7 +12,6 @@ const QuestionAnswerComponent = dynamic(
     { ssr: false },
 );
 const WizardHatPage: React.FC = () => {
-    const router = useRouter();
     const [solutions, setSolutions] = useState<string[]>([]);
     const [activeStep, setActiveStep] = useState(0);
 

@@ -14,13 +14,13 @@ import React, {
     useState,
 } from "react";
 import * as THREE from "three";
-import {BufferGeometry, Mesh, NormalBufferAttributes} from "three";
+import { BufferGeometry, Mesh, NormalBufferAttributes } from "three";
 
 // @ts-expect-error
-import {GLTF, GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-import {SvgIconOwnProps} from "@mui/material";
+import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { SvgIconOwnProps } from "@mui/material";
 import Webcam from "react-webcam";
-import {combineImagesFromCanvasApi, printImageApi} from "@/api/images";
+import { combineImagesFromCanvasApi, printImageApi } from "@/api/images";
 
 export type SelectablePageItem = {
     label: ReactNode;
@@ -58,8 +58,7 @@ export type BackgroundFilterName =
 
 export type ThreeModelType =
     | ComponentType<{ webcamInstance?: HTMLVideoElement | undefined }>
-    | ForwardRefExoticComponent<PropsMaskModel & RefAttributes<MeshType>>
-    ;
+    | ForwardRefExoticComponent<PropsMaskModel & RefAttributes<MeshType>>;
 
 export type FilterItem<T extends string> = {
     id: string;
@@ -87,7 +86,13 @@ export const CAMERA_FRAME_MAX_HEIGHT = 400;
 
 export type MeshType = Mesh<BufferGeometry<NormalBufferAttributes>>;
 
-export type MaskPosition = "HEAD" | "BOTH-EYES" | "NOSE" | "MOUTH" | "CHIN" | "WHOLE-FACE";
+export type MaskPosition =
+    | "HEAD"
+    | "BOTH-EYES"
+    | "NOSE"
+    | "MOUTH"
+    | "CHIN"
+    | "WHOLE-FACE";
 
 export type QuestionAnswer = {
     question: string;
@@ -95,13 +100,14 @@ export type QuestionAnswer = {
         text: string;
         value: string;
         listPrefix: string;
+        videoUrl?: string;
         onClick: () => void;
     }[];
 };
 
 export type PropsMaskModel = {
     setPosition: (position: MaskPosition) => void;
-}
+};
 
 export const decomposeMatrix = (
     matrix1d: number[],
@@ -162,7 +168,10 @@ type Output = {
     setWebGLRenderer: (renderer: THREE.WebGLRenderer) => void;
 
     // Apis
-    combineImagesFromCanvas: (underlyingCanvas: HTMLCanvasElement, onTopCanvas: HTMLCanvasElement) => Promise<ImageTyp>;
+    combineImagesFromCanvas: (
+        underlyingCanvas: HTMLCanvasElement,
+        onTopCanvas: HTMLCanvasElement,
+    ) => Promise<ImageTyp>;
     printImage: (image: ImageTyp) => Promise<void>;
 };
 
@@ -177,7 +186,6 @@ export const useAppContext = () => {
         return () => {
             // Clear Filter list on unmount. No need to this since the state is overwritten each time setFilterItems is called
             // context.clearFilterItems();
-
             // Clear image list on unmount
             // context.clearImages();
         };
@@ -200,7 +208,9 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     const [webcamInstance, setWebcamInstance] = useState<Webcam | undefined>(
         undefined,
     );
-    const [webGLRenderer, setWebGLRenderer] = useState<THREE.WebGLRenderer | undefined>(undefined);
+    const [webGLRenderer, setWebGLRenderer] = useState<
+        THREE.WebGLRenderer | undefined
+    >(undefined);
 
     // Images captured from Camera component
     const [images, setImages] = useState<ImageTyp[]>([]);
@@ -222,13 +232,16 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     };
 
     // Apis
-    const combineImagesFromCanvas = async (underlyingCanvas: HTMLCanvasElement, onTopCanvas: HTMLCanvasElement): Promise<ImageTyp> => {
+    const combineImagesFromCanvas = async (
+        underlyingCanvas: HTMLCanvasElement,
+        onTopCanvas: HTMLCanvasElement,
+    ): Promise<ImageTyp> => {
         return await combineImagesFromCanvasApi(underlyingCanvas, onTopCanvas);
     };
 
     const printImage = async (image: ImageTyp) => {
         return await printImageApi(image);
-    }
+    };
 
     return (
         <AppContext.Provider
@@ -255,7 +268,9 @@ export const ApplicationContextProvider: FC<PropsAppContextProvider> = (
     );
 };
 
-export const videoToHtmlCanvas = (videoElement: HTMLVideoElement): HTMLCanvasElement => {
+export const videoToHtmlCanvas = (
+    videoElement: HTMLVideoElement,
+): HTMLCanvasElement => {
     const canvas = document.createElement("canvas");
 
     canvas.width = videoElement.videoWidth;
@@ -265,10 +280,9 @@ export const videoToHtmlCanvas = (videoElement: HTMLVideoElement): HTMLCanvasEle
     ctx?.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
     return canvas;
-}
+};
 
 // @ts-ignore
 export const stopVideoStream = (stream: MediaStream) => {
-    stream?.getTracks()
-        .forEach((track) => track.stop());
-}
+    stream?.getTracks().forEach((track) => track.stop());
+};

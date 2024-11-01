@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Card, Stack, Typography, useColorScheme } from "@mui/joy";
+import { AspectRatio, Box, Stack, Typography, useColorScheme } from "@mui/joy";
 import { QuestionAnswer } from "@/context/ApplicationContext";
 
 type Props = {
@@ -30,35 +30,52 @@ const QuestionAnswerComponent: React.FC<Props> = (props) => {
                 }}
             >
                 {questionAnswer.options.map((o, i) => (
-                    <Card
+                    <Stack
+                        component={"div"}
                         key={i}
-                        sx={{
-                            borderRadius: "var(--space-3)",
-                            borderWidth: "3px",
-                            py: "var(--space-7)",
-                            px: "var(--space-7)",
-                            "&:hover": {
-                                cursor: "pointer",
-                                border:
-                                    mode === "light"
-                                        ? "3px solid var(--color-primary)"
-                                        : "3px solid white",
-                            },
-                        }}
+                        spacing={"var(--space-6)"}
                         onClick={() => handleSelect(o.onClick)}
                     >
-                        <Typography
-                            level={"h2"}
-                            sx={{ fontWeight: 600 }}
-                            textAlign={"center"}
-                            color="primary"
+                        <AspectRatio
+                            ratio={"16/9"}
+                            sx={{
+                                borderRadius: "var(--space-3)",
+                                border: "3px solid transparent",
+                                //py: "var(--space-7)",
+                                //px: "var(--space-7)",
+                                "&:hover": {
+                                    cursor: "pointer",
+                                    border:
+                                        mode === "light"
+                                            ? "3px solid var(--color-primary)"
+                                            : "3px solid white",
+                                },
+                            }}
                         >
-                            {o.listPrefix}
-                        </Typography>
-                        <Typography level={"h4"} color="primary">
-                            {o.text}
-                        </Typography>
-                    </Card>
+                            <video autoPlay playsInline loop preload="none">
+                                <source src={o.videoUrl} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </AspectRatio>
+                        <div
+                            style={{
+                                padding: "0 var(--space-3)",
+                            }}
+                        >
+                            {/*<Typography*/}
+                            {/*    level={"h3"}*/}
+                            {/*    sx={{ fontWeight: 600 }}*/}
+                            {/*    color="primary"*/}
+                            {/*>*/}
+                            {/*    {o.listPrefix}.*/}
+                            {/*</Typography>*/}
+                            <Typography level={"h4"} sx={{ color: "black" }}>
+                                <span
+                                    dangerouslySetInnerHTML={{ __html: o.text }}
+                                />
+                            </Typography>
+                        </div>
+                    </Stack>
                 ))}
             </Box>
         </Stack>

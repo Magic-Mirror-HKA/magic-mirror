@@ -80,6 +80,7 @@ const PageWrapperContainer = styled(Box)(() => ({
     justifySelf: "center",
     padding: "var(--space-10)",
     height: "100%",
+    width: "100%",
     "@media screen and (max-width: 900px)": {
         padding: "var(--space-7)",
     },

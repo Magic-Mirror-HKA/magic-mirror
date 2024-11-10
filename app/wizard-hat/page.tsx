@@ -1,7 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
-import { QuestionAnswer } from "@/context/ApplicationContext";
+import {
+    getRandomNumber,
+    QuestionAnswer,
+    QuestionOption,
+} from "@/context/ApplicationContext";
 import dynamic from "next/dynamic";
 import { Button, Stack, Typography } from "@mui/joy";
 
@@ -12,7 +16,7 @@ const QuestionAnswerComponent = dynamic(
     { ssr: false },
 );
 const WizardHatPage: React.FC = () => {
-    const [solutions, setSolutions] = useState<string[]>([]);
+    const [solutions, setSolutions] = useState<QuestionOption[]>([]);
     const [activeStep, setActiveStep] = useState(0);
 
     const questionAnswerList: QuestionAnswer[] = [
@@ -29,7 +33,10 @@ const WizardHatPage: React.FC = () => {
                     listPrefix: "A",
                     videoUrl: "/videos/data-science.mp4",
                     onClick: () => {
-                        setSolutions((prev) => [...prev, "Data Science"]);
+                        setSolutions((prev) => [
+                            ...prev,
+                            questionAnswerList[0].options[0],
+                        ]);
                     },
                 },
                 {
@@ -43,7 +50,7 @@ const WizardHatPage: React.FC = () => {
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Wirtschaftsinformatik",
+                            questionAnswerList[0].options[1],
                         ]);
                     },
                 },
@@ -58,7 +65,7 @@ const WizardHatPage: React.FC = () => {
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Internationales IT Business",
+                            questionAnswerList[0].options[2],
                         ]);
                     },
                 },
@@ -75,8 +82,12 @@ const WizardHatPage: React.FC = () => {
                         "Daten wertvolle Erkenntnisse zu gewinnen.",
                     value: "Data Science",
                     listPrefix: "A",
+                    videoUrl: "/videos/data-science.mp4",
                     onClick: () => {
-                        setSolutions((prev) => [...prev, "Data Science"]);
+                        setSolutions((prev) => [
+                            ...prev,
+                            questionAnswerList[1].options[0],
+                        ]);
                     },
                 },
                 {
@@ -87,10 +98,11 @@ const WizardHatPage: React.FC = () => {
                         "<span style='color: var(--color-primary)'>Geschäftsprozesse</span> zu optimieren.",
                     value: "Wirtschaftsinformatik",
                     listPrefix: "B",
+                    videoUrl: "/videos/wirtschaftsinfo.mp4",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Wirtschaftsinformatik",
+                            questionAnswerList[1].options[1],
                         ]);
                     },
                 },
@@ -101,10 +113,11 @@ const WizardHatPage: React.FC = () => {
                         "entwickeln, um globale Herausforderungen zu meistern.",
                     value: "Internationales IT Business",
                     listPrefix: "C",
+                    videoUrl: "/videos/it-business.mp4",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
-                            "Internationales IT Business",
+                            questionAnswerList[1].options[2],
                         ]);
                     },
                 },
@@ -114,12 +127,32 @@ const WizardHatPage: React.FC = () => {
 
     const maxSteps = questionAnswerList.length;
 
-    const getResults = (): string[] => {
-        return solutions.reduce(
-            (acc: string[], curr: string) =>
-                acc.find((s) => s === curr) ? acc : [...acc, curr],
-            [],
-        );
+    // Remove duplicates before renderings
+    const results: QuestionOption[] = solutions.reduce(
+        (acc: QuestionOption[], curr: QuestionOption) =>
+            acc.find((s) => s.value === curr.value) ? acc : [...acc, curr],
+        [],
+    );
+
+    const getQrCodeLinkOfFaculty = (): { src: string; label: string }[] => {
+        return results.map((r) => {
+            switch (r.value) {
+                case "Data Science":
+                    return { src: "/qrcodes/dscb.png", label: "Data Science" };
+                case "Wirtschaftsinformatik":
+                    return {
+                        src: "/qrcodes/wib.png",
+                        label: "Wirtschaftsinformatik",
+                    };
+                case "Internationales IT Business":
+                    return {
+                        src: "/qrcodes/iib.png",
+                        label: "Internationales IT Business",
+                    };
+                default:
+                    return { src: "", label: "" };
+            }
+        });
     };
 
     const clearSelection = () => {
@@ -160,64 +193,43 @@ const WizardHatPage: React.FC = () => {
                         style={{
                             display: "grid",
                             gap: "var(--space-4)",
-                            //padding: "var(--space-6) 0 0 0",
                             alignSelf: "center",
                         }}
                     >
-                        <Typography
-                            // level={"h1"}
-                            sx={{
-                                fontSize: "var(--font-xLarge)",
-                            }}
-                        >
-                            {getResults().length === 1 ? (
-                                <>
-                                    Schaue Dir den Studiengang{" "}
-                                    <span
+                        <ResultTextComponent results={results} />
+                        <Stack direction={"row"} spacing={"var(--space-20)"}>
+                            {getQrCodeLinkOfFaculty().map((code, _, array) => (
+                                <Stack
+                                    key={code.src}
+                                    spacing={"var(--space-2)"}
+                                    sx={{
+                                        alignItems: "center",
+                                        alignContent: "center",
+                                    }}
+                                >
+                                    <img
+                                        src={code.src}
+                                        alt={"QR-code"}
                                         style={{
-                                            fontWeight: 600,
-                                            color: "var(--color-primary)",
+                                            objectFit: "contain",
+                                            width: "200px",
+                                            justifySelf: "start",
+                                            borderRadius: "var(--space-3)",
+                                            border: "2px solid var(--color-primary)",
                                         }}
-                                    >
-                                        {getResults()[0]}
-                                    </span>{" "}
-                                    genauer an
-                                </>
-                            ) : (
-                                <>
-                                    Schaue Dir die Studiengänge{" "}
-                                    <span
-                                        style={{
-                                            fontWeight: 600,
-                                            color: "var(--color-primary)",
-                                        }}
-                                    >
-                                        {getResults()[0]}
-                                    </span>{" "}
-                                    und{" "}
-                                    <span
-                                        style={{
-                                            fontWeight: 600,
-                                            color: "var(--color-primary)",
-                                        }}
-                                    >
-                                        {getResults()[1]}
-                                    </span>{" "}
-                                    genauer an
-                                </>
-                            )}
-                        </Typography>
-                        <img
-                            src={"/qrcodes/wi-qrcode.png"}
-                            alt={""}
-                            style={{
-                                objectFit: "contain",
-                                width: "40%",
-                                justifySelf: "start",
-                                borderRadius: "var(--space-3)",
-                                border: "2px solid var(--color-primary)",
-                            }}
-                        />
+                                    />
+                                    {array.length === 1 ? null : (
+                                        <Typography
+                                            level={"body-sm"}
+                                            color={"primary"}
+                                            textAlign={"center"}
+                                        >
+                                            {code.label}
+                                        </Typography>
+                                    )}
+                                </Stack>
+                            ))}
+                        </Stack>
                         <Stack
                             direction={"row"}
                             spacing={"var(--space-4)"}
@@ -230,40 +242,98 @@ const WizardHatPage: React.FC = () => {
                             >
                                 Erneut auswählen
                             </Button>
-                            {/*<Button*/}
-                            {/*    variant="outlined"*/}
-                            {/*    size="lg"*/}
-                            {/*    onClick={() => router.push("/")}*/}
-                            {/*>*/}
-                            {/*    Zur Startseite*/}
-                            {/*</Button>*/}
                         </Stack>
                     </div>
-                    <Stack component={"div"} spacing={"var(--space-5)"}>
-                        <video
-                            autoPlay
-                            playsInline
-                            loop
-                            preload="none"
-                            style={{
-                                borderRadius: "var(--space-3)",
-                                border: "8px solid white",
-                                boxShadow: "0 0 10px grey",
-                                width: "100%",
-                                transform: "rotateZ(5deg)",
-                            }}
-                        >
-                            <source
-                                src={"/videos/data-science.mp4"}
-                                type="video/mp4"
-                            />
-                            Your browser does not support the video tag.
-                        </video>
-                        <img src={"/result-text.png"} alt={""} />
-                    </Stack>
+                    <VideoAndReactionComponent
+                        videoSrc={results[0].videoUrl}
+                        videoFormat={"video/mp4"}
+                        reactionSrc={`/reaction-${getRandomNumber(1, 4)}.png`}
+                    />
                 </Stack>
             )}
         </PageContentWrapperComponent>
+    );
+};
+
+type ResultTextProps = {
+    results: QuestionOption[];
+};
+const ResultTextComponent: React.FC<ResultTextProps> = (props) => {
+    const { results } = props;
+    return (
+        <Typography
+            // level={"h1"}
+            sx={{
+                fontSize: "var(--font-xLarge)",
+            }}
+        >
+            {results.length === 1 ? (
+                <>
+                    Schaue Dir den Studiengang{" "}
+                    <span
+                        style={{
+                            fontWeight: 600,
+                            color: "var(--color-primary)",
+                        }}
+                    >
+                        {results[0].value}
+                    </span>{" "}
+                    genauer an
+                </>
+            ) : (
+                <>
+                    Schaue Dir die Studiengänge{" "}
+                    <span
+                        style={{
+                            fontWeight: 600,
+                            color: "var(--color-primary)",
+                        }}
+                    >
+                        {results[0].value}
+                    </span>{" "}
+                    und{" "}
+                    <span
+                        style={{
+                            fontWeight: 600,
+                            color: "var(--color-primary)",
+                        }}
+                    >
+                        {results[1].value}
+                    </span>{" "}
+                    genauer an
+                </>
+            )}
+        </Typography>
+    );
+};
+
+type VideoAndReactionProps = {
+    videoSrc: string;
+    videoFormat: string;
+    reactionSrc: string;
+};
+const VideoAndReactionComponent: React.FC<VideoAndReactionProps> = (props) => {
+    const { videoSrc, videoFormat, reactionSrc } = props;
+    return (
+        <Stack component={"div"} spacing={"var(--space-7)"}>
+            <video
+                autoPlay
+                playsInline
+                loop
+                preload="none"
+                style={{
+                    borderRadius: "var(--space-3)",
+                    border: "8px solid white",
+                    boxShadow: "0 0 10px grey",
+                    width: "100%",
+                    transform: "rotateZ(5deg)",
+                }}
+            >
+                <source src={videoSrc} type={videoFormat} />
+                Your browser does not support the video tag.
+            </video>
+            <img src={reactionSrc} alt={"Reaktion"} />
+        </Stack>
     );
 };
 

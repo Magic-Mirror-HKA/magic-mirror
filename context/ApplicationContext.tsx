@@ -94,15 +94,19 @@ export type MaskPosition =
     | "CHIN"
     | "WHOLE-FACE";
 
+export type Faculty = "Data Science" | "Wirtschaftsinformatik" | "Internationales IT Business";
+
+export type QuestionOption = {
+    text: string;
+    value: Faculty;
+    listPrefix: string;
+    videoUrl: string;
+    onClick: () => void;
+};
+
 export type QuestionAnswer = {
     question: string;
-    options: {
-        text: string;
-        value: string;
-        listPrefix: string;
-        videoUrl?: string;
-        onClick: () => void;
-    }[];
+    options: QuestionOption[];
 };
 
 export type PropsMaskModel = {
@@ -286,3 +290,7 @@ export const videoToHtmlCanvas = (
 export const stopVideoStream = (stream: MediaStream) => {
     stream?.getTracks().forEach((track) => track.stop());
 };
+
+export const getRandomNumber = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

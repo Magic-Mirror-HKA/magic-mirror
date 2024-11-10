@@ -18,7 +18,7 @@ const QuestionAnswerComponent: React.FC<Props> = (props) => {
     };
     return (
         <Stack spacing="var(--space-7)">
-            <Typography level={"h2"} textAlign={"center"}>
+            <Typography level={"h1"} textAlign={"center"} color={"primary"}>
                 {questionAnswer.question}
             </Typography>
             <Box

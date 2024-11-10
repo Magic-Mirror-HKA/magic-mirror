@@ -62,7 +62,7 @@ const PageContentWrapperComponent: React.FC<Props> = (props: Props) => {
                     </IconButton>
                 ) : null}
                 {title ? (
-                    <Typography level={"h1"} sx={pageHeaderTitleStyles}>
+                    <Typography level={"h2"} sx={pageHeaderTitleStyles}>
                         {title}
                     </Typography>
                 ) : null}

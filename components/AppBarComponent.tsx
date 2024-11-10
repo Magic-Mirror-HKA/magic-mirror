@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, styled, Typography } from "@mui/joy";
+import { Box, styled } from "@mui/joy";
 //import Avatar from "@mui/joy/Avatar";
 
 const AppBarComponent: React.FC = () => {
     return (
         <AppBarContainer>
-            <AppName>Magic Mirror</AppName>
+            {/*<AppName>Magic Mirror</AppName>*/}
             <AvatarContainer>
                 {/*<UserName>Admin</UserName>*/}
                 {/*<AvatarComponent variant="solid" size="md" />*/}
@@ -27,18 +27,16 @@ const AppBarContainer = styled(Box)(() => ({
     marginTop: -20,
 }));
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const AppName = styled(Typography)(({ theme }) => ({
-    fontSize: "var(--font-2xLarge)",
-    fontWeight: "600",
-    color: theme.vars.palette.primary["500"],
-    textAlign: {
-        sm: "left",
-        md: "center",
-        lg: "center",
-    },
-}));
+// const AppName = styled(Typography)(({ theme }) => ({
+//     fontSize: "var(--font-2xLarge)",
+//     fontWeight: "600",
+//     color: theme.vars.palette.primary["500"],
+//     textAlign: {
+//         sm: "left",
+//         md: "center",
+//         lg: "center",
+//     },
+// }));
 
 const AvatarContainer = styled(Box)(() => ({
     display: "flex",

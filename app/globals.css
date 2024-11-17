@@ -4,7 +4,7 @@ body {
     padding: 0;
     margin: 0;
     border: 0;
-    font-family: Roboto, Rubik, Inter, "Helvetica Neue", sans-serif !important;
+    font-family: var(--joy-fontFamily-display, "Inter", var(--joy-fontFamily-fallback, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"));
     font-size: var(--font-normal) !important;
     display: grid;
     height: 100dvh;

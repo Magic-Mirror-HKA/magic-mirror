@@ -26,9 +26,9 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du möchtest die Geheimnisse der " +
-                        "<span style='color: var(--color-primary)'>Datenwissenschaft</span> entschlüsseln und " +
-                        "<span style='color: var(--color-primary)'>Muster</span> in " +
-                        "<span style='color: var(--color-primary)'>großen Datensätzen</span> erkennen.",
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Datenwissenschaft</span> entschlüsseln und " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Muster</span> in " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>großen Datensätzen</span> erkennen.",
                     value: "Data Science",
                     listPrefix: "A",
                     videoUrl: "/videos/data-science.mp4",
@@ -42,7 +42,7 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du interessierst dich für die " +
-                        "<span style='color: var(--color-primary)'>Verbindung von IT und Wirtschaft</span>. Du möchtest " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Verbindung von IT und Wirtschaft</span>. Du möchtest " +
                         "die Effizienz von Unternehmen durch technologische Lösungen verbessern.",
                     value: "Wirtschaftsinformatik",
                     listPrefix: "B",
@@ -57,7 +57,7 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du siehst die Welt als deinen Spielplatz und möchtest in einer " +
-                        "<span style='color: var(--color-primary)'>globalen Wirtschaftsumgebung</span> arbeiten. " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>globalen Wirtschaftsumgebung</span> arbeiten. " +
                         "Internationale Unternehmen und IT sind deine Leidenschaft.",
                     value: "Internationales IT Business",
                     listPrefix: "C",
@@ -78,7 +78,7 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du möchtest " +
-                        "<span style='color: var(--color-primary)'>analytische Fähigkeiten erlangen</span>, um aus " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>analytische Fähigkeiten erlangen</span>, um aus " +
                         "Daten wertvolle Erkenntnisse zu gewinnen.",
                     value: "Data Science",
                     listPrefix: "A",
@@ -93,9 +93,9 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du möchtest technisches Know-how erwerben, um " +
-                        "<span style='color: var(--color-primary)'>Software zu entwickeln</span>, " +
-                        "<span style='color: var(--color-primary)'>Digitalisierung</span> voranzutreiben oder " +
-                        "<span style='color: var(--color-primary)'>Geschäftsprozesse</span> zu optimieren.",
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Software zu entwickeln</span>, " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Digitalisierung</span> voranzutreiben oder " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>Geschäftsprozesse</span> zu optimieren.",
                     value: "Wirtschaftsinformatik",
                     listPrefix: "B",
                     videoUrl: "/videos/wirtschaftsinfo.mp4",
@@ -109,7 +109,7 @@ const WizardHatPage: React.FC = () => {
                 {
                     text:
                         "Du möchtest sowohl " +
-                        "<span style='color: var(--color-primary)'>technische als auch interkulturelle Fähigkeiten</span> " +
+                        "<span style='color: var(--color-primary); font-weight: 600;'>technische als auch interkulturelle Fähigkeiten</span> " +
                         "entwickeln, um globale Herausforderungen zu meistern.",
                     value: "Internationales IT Business",
                     listPrefix: "C",

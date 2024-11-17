@@ -69,7 +69,7 @@ const QuestionAnswerComponent: React.FC<Props> = (props) => {
                             {/*>*/}
                             {/*    {o.listPrefix}.*/}
                             {/*</Typography>*/}
-                            <Typography level={"h4"} sx={{ color: "black" }}>
+                            <Typography sx={{ fontSize: "var(--font-large)" }}>
                                 <span
                                     dangerouslySetInnerHTML={{ __html: o.text }}
                                 />

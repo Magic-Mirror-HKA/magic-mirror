@@ -75,9 +75,13 @@ const VideoComponent: React.FC<VideoProps> = (props) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
+        reload();
+    }, [url]);
+
+    const reload = () => {
         if (!videoRef.current) return;
         videoRef.current.load();
-    }, [url]);
+    };
 
     return (
         <AspectRatio
@@ -96,7 +100,14 @@ const VideoComponent: React.FC<VideoProps> = (props) => {
                 },
             }}
         >
-            <video ref={videoRef} autoPlay playsInline loop preload="none">
+            <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                loop
+                preload="none"
+                onError={reload}
+            >
                 <source src={url} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>

@@ -5,7 +5,7 @@ import React from "react";
 import PageContentWrapperComponent from "@/components/shared/PageContentWrapperComponent";
 import { SelectablePageItem } from "@/context/ApplicationContext";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import MasksIcon from "@mui/icons-material/Masks";
+import TheaterComedyRoundedIcon from "@mui/icons-material/TheaterComedyRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import SelectableItemListComponent from "@/components/shared/SelectableItemListComponent";
 import { SxProps } from "@mui/joy/styles/types";
@@ -23,7 +23,9 @@ const Home: React.FC = () => {
         {
             label: "Animationen",
             // @ts-expect-error
-            icon: <MasksIcon fontSize="inherit" sx={IconStyle} />,
+            icon: (
+                <TheaterComedyRoundedIcon fontSize="inherit" sx={IconStyle} />
+            ),
             onClick: () => router.push("/filter"),
         },
         {

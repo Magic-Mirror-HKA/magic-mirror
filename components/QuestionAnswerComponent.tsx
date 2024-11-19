@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { AspectRatio, Box, Stack, Typography, useColorScheme } from "@mui/joy";
 import { QuestionAnswer } from "@/context/ApplicationContext";
 
@@ -10,7 +10,10 @@ type Props = {
 
 const QuestionAnswerComponent: React.FC<Props> = (props) => {
     const { questionAnswer, onSelect } = props;
-    const { mode } = useColorScheme();
+
+    useEffect(() => {
+        console.log("questionAnswer: ", questionAnswer);
+    }, [questionAnswer]);
 
     const handleSelect = (callback: () => void) => {
         callback();
@@ -36,27 +39,7 @@ const QuestionAnswerComponent: React.FC<Props> = (props) => {
                         spacing={"var(--space-6)"}
                         onClick={() => handleSelect(o.onClick)}
                     >
-                        <AspectRatio
-                            ratio={"16/9"}
-                            sx={{
-                                borderRadius: "var(--space-3)",
-                                border: "3px solid transparent",
-                                //py: "var(--space-7)",
-                                //px: "var(--space-7)",
-                                "&:hover": {
-                                    cursor: "pointer",
-                                    border:
-                                        mode === "light"
-                                            ? "3px solid var(--color-primary)"
-                                            : "3px solid white",
-                                },
-                            }}
-                        >
-                            <video autoPlay playsInline loop preload="none">
-                                <source src={o.videoUrl} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        </AspectRatio>
+                        <VideoComponent url={o.videoUrl} />
                         <div
                             style={{
                                 padding: "0 var(--space-3)",
@@ -79,6 +62,45 @@ const QuestionAnswerComponent: React.FC<Props> = (props) => {
                 ))}
             </Box>
         </Stack>
+    );
+};
+
+type VideoProps = {
+    url: string;
+};
+const VideoComponent: React.FC<VideoProps> = (props) => {
+    const { url } = props;
+    const { mode } = useColorScheme();
+
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        if (!videoRef.current) return;
+        videoRef.current.load();
+    }, [url]);
+
+    return (
+        <AspectRatio
+            ratio={"16/9"}
+            sx={{
+                borderRadius: "var(--space-3)",
+                border: "3px solid transparent",
+                //py: "var(--space-7)",
+                //px: "var(--space-7)",
+                "&:hover": {
+                    cursor: "pointer",
+                    border:
+                        mode === "light"
+                            ? "3px solid var(--color-primary)"
+                            : "3px solid white",
+                },
+            }}
+        >
+            <video ref={videoRef} autoPlay playsInline loop preload="none">
+                <source src={url} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </AspectRatio>
     );
 };
 

@@ -82,7 +82,7 @@ const WizardHatPage: React.FC = () => {
                         "Daten wertvolle Erkenntnisse zu gewinnen.",
                     value: "Data Science",
                     listPrefix: "A",
-                    videoUrl: "/videos/data-science.mp4",
+                    videoUrl: "/videos/data-science-2.mp4",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
@@ -98,7 +98,7 @@ const WizardHatPage: React.FC = () => {
                         "<span style='color: var(--color-primary); font-weight: 600;'>Geschäftsprozesse</span> zu optimieren.",
                     value: "Wirtschaftsinformatik",
                     listPrefix: "B",
-                    videoUrl: "/videos/wirtschaftsinfo.mp4",
+                    videoUrl: "/videos/wirtschaftsinfo-2.mp4",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
@@ -113,7 +113,7 @@ const WizardHatPage: React.FC = () => {
                         "entwickeln, um globale Herausforderungen zu meistern.",
                     value: "Internationales IT Business",
                     listPrefix: "C",
-                    videoUrl: "/videos/it-business.mp4",
+                    videoUrl: "/videos/it-business-2.mp4",
                     onClick: () => {
                         setSolutions((prev) => [
                             ...prev,
@@ -155,6 +155,8 @@ const WizardHatPage: React.FC = () => {
         });
     };
 
+    const questAndAnswerToShow = questionAnswerList[activeStep];
+
     const clearSelection = () => {
         setSolutions([]);
         setActiveStep(0);
@@ -169,7 +171,7 @@ const WizardHatPage: React.FC = () => {
                 <>
                     <QuestionAnswerComponent
                         onSelect={() => setActiveStep((prev) => prev + 1)}
-                        questionAnswer={questionAnswerList[activeStep]}
+                        questionAnswer={questAndAnswerToShow}
                     />
                     <Typography
                         color="primary"

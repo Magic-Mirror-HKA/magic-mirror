@@ -8,7 +8,6 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import TheaterComedyRoundedIcon from "@mui/icons-material/TheaterComedyRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import SelectableItemListComponent from "@/components/shared/SelectableItemListComponent";
-import { SxProps } from "@mui/joy/styles/types";
 import { useRouter } from "next/navigation";
 
 const Home: React.FC = () => {
@@ -16,13 +15,11 @@ const Home: React.FC = () => {
     const selectableItems: SelectablePageItem[] = [
         {
             label: "Kamera",
-            // @ts-expect-error
             icon: <CameraAltIcon fontSize="inherit" sx={IconStyle} />,
             onClick: () => router.push("/camera"),
         },
         {
             label: "Animationen",
-            // @ts-expect-error
             icon: (
                 <TheaterComedyRoundedIcon fontSize="inherit" sx={IconStyle} />
             ),
@@ -30,7 +27,6 @@ const Home: React.FC = () => {
         },
         {
             label: "Welcher Studiengang passt zu mir?",
-            // @ts-expect-error
             icon: <SchoolRoundedIcon fontSize="inherit" sx={IconStyle} />,
             onClick: () => router.push("/wizard-hat"),
         },
@@ -55,9 +51,9 @@ const Home: React.FC = () => {
     );
 };
 
-const IconStyle: SxProps = () => ({
+const IconStyle = {
     color: "var(--color-white)",
     filter: "drop-shadow(0px 4px 4px rgba(0,0,0,0.6000000238418579))",
-});
+};
 
 export default Home;
